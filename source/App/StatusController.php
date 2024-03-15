@@ -180,7 +180,6 @@ class StatusController extends Controller
     public function remove(array $data): void
     {
         $status = (new Status)->find("id = :id", "id={$data["id"]}")->fetch();
-        var_dump($status);
         if (!$status) {
             $this->message->warning("Ooops {$this->user->first_name}! Você tentou excluir um registro inexistente do banco de dados.")->flash();
         } else {

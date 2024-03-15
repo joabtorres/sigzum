@@ -21,7 +21,7 @@ class User extends Model
         parent::__construct(
             "users",
             ["id"],
-            ["sectors_id", "first_name", "last_name", "email", "password"]
+            ["sector_id", "first_name", "last_name", "email", "password"]
         );
     }
 
@@ -30,6 +30,7 @@ class User extends Model
      * @param string      $lastName
      * @param string      $email
      * @param string      $password
+     * @param int         $status
      * @param string|null $document
      *
      * @return User
@@ -39,13 +40,17 @@ class User extends Model
         string $lastName,
         string $email,
         string $password,
-        string $avatar = null
+        int $sectorId,
+        int $status,
+        string $avatar = null,
     ): User {
         $this->first_name = $firstName;
         $this->last_name = $lastName;
         $this->email = $email;
         $this->password = $password;
         $this->avatar = $avatar;
+        $this->sector_id = $sectorId;
+        $this->status = $status;
         return $this;
     }
 
@@ -71,7 +76,7 @@ class User extends Model
     public function save(): bool
     {
         if (!$this->required()) {
-            $this->message->warning("Nome, sobrenome, email e senha são obrigatórios");
+            $this->message->warning("Nome, sobrenome, email, senha e setor são obrigatórios");
             return false;
         }
 
@@ -133,8 +138,8 @@ class User extends Model
 
     public function sector(): ?Sector
     {
-        if ($this->sectors_id) {
-            return (new Sector())->findById($this->sectors_id);
+        if ($this->sector_id) {
+            return (new Sector())->findById($this->sector_id);
         }
     }
 }

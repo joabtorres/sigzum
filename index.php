@@ -74,11 +74,18 @@ $route->get("/update/{id}", "StatusController@update");
 $route->post("/update/{id}", "StatusController@update");
 $route->get("/remove/{id}", "StatusController@remove");
 
-
-
 /**
- * SECTORS ROUTES
+ * USERS ROUTES
  */
+$route->group("/user");
+$route->get("", "UserController@search");
+$route->post("", "UserController@search");
+$route->get("/{type}/{search}/{date_start}/{date_final}/{order}/{page}", "UserController@search");
+$route->get("/register", "UserController@register");
+$route->post("/register", "UserController@register");
+$route->get("/update/{id}", "UserController@update");
+$route->post("/update/{id}", "UserController@update");
+$route->get("/remove/{id}", "UserController@remove");
 
 /**
  * ERROR ROUTES [400, 404,405, 501]

@@ -203,7 +203,6 @@ class CompanyController extends Controller
     public function remove(array $data): void
     {
         $company = (new Company)->find("id = :company", "company={$data["company"]}")->fetch();
-        var_dump($company);
         if (!$company) {
             $this->message->warning("Ooops {$this->user->first_name}! Você tentou excluir um registro inexistente do banco de dados.")->flash();
         } else {

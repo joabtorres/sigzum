@@ -61,15 +61,13 @@
                             <a href="#sidebarUser" data-toggle="collapse" aria-expanded="false"><i class="fas fa-angle-double-right"></i> Usuários</a>
                             <ul class="collapse list-unstyled" id="sidebarUser">
                                 <li>
-                                    <a href="usuario/novo-registro"><i class="fa-solid fa-user-plus"></i>
-                                        Novo Registro</a>
+                                    <a href="<?= url("user/register") ?>"><i class="fa-solid fa-user-plus"></i> Novo Registro</a>
                                 </li>
                                 <li>
-                                    <a href="usuario/consultar"><i class="fas fa-tasks"></i> Usuários</a>
+                                    <a href="<?= url("user") ?>"><i class="fas fa-tasks"></i> Usuários</a>
                                 </li>
                                 <li>
-                                    <a href="usuario/editar"><i class="fa-solid fa-user-pen"></i> Editar
-                                        Perfil</a>
+                                    <a href="<?= url("user/update/" . user()->id) ?>"><i class="fa-solid fa-user-pen"></i> Editar Perfil</a>
                                 </li>
                             </ul>
                         </li>
@@ -77,16 +75,13 @@
                             <a href="#sidebarSettings" data-toggle="collapse" aria-expanded="false"><i class="fas fa-angle-double-right"></i> Configurações</a>
                             <ul class="collapse list-unstyled" id="sidebarSettings">
                                 <li>
-                                    <a href="<?= url("company") ?>"><i class="fa-solid fa-hotel"></i>
-                                        Empresa</a>
+                                    <a href="<?= url("company") ?>"><i class="fa-solid fa-hotel"></i> Empresa</a>
                                 </li>
                                 <li>
-                                    <a href="<?= url("sector") ?>"><i class="fa-solid fa-sitemap"></i>
-                                        Setores</a>
+                                    <a href="<?= url("sector") ?>"><i class="fa-solid fa-sitemap"></i> Setores</a>
                                 </li>
                                 <li>
-                                    <a href="<?= url("/status") ?>"><i class="fa-solid fa-swatchbook"></i>
-                                        Status</a>
+                                    <a href="<?= url("/status") ?>"><i class="fa-solid fa-swatchbook"></i> Status</a>
                                 </li>
                             </ul>
                         </li>

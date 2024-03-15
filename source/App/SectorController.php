@@ -180,7 +180,6 @@ class SectorController extends Controller
     public function remove(array $data): void
     {
         $sector = (new Sector)->find("id = :id", "id={$data["id"]}")->fetch();
-        var_dump($sector);
         if (!$sector) {
             $this->message->warning("Ooops {$this->user->first_name}! Você tentou excluir um registro inexistente do banco de dados.")->flash();
         } else {

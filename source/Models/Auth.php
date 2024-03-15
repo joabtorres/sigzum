@@ -109,6 +109,10 @@ class Auth extends Model
             $this->message->error("O e-mail informado não está cadastrado");
             return false;
         }
+        if (!$user->status) {
+            $this->message->error("O acesso deste usuário foi revogado.");
+            return false;
+        }
 
         if (!passwd_verify($password, $user->password)) {
             $this->message->error("A senha informada não confere");
@@ -137,6 +141,10 @@ class Auth extends Model
 
         if (!$user) {
             $this->message->warning("O e-mail informado não está cadastrado");
+            return false;
+        }
+        if (!$user->status) {
+            $this->message->warning("O acesso deste usuário foi revogado.");
             return false;
         }
 
