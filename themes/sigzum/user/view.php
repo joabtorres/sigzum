@@ -9,9 +9,10 @@
             </header>
             <article class="modal-body">
                 <ul class="list-unstyled">
-                    <li><b>Setor: </b> <?= ("{$user->first_name} {$user->last_name}" ?? "") ?>;</li>
+                    <li><b>Nome: </b> <?= ("{$user->first_name} {$user->last_name}" ?? "") ?>;</li>
                     <li><b>Email: </b> <?= ($user->email ?? "") ?>;</li>
                     <li><b>Setor: </b> <?= ($user->sector()->name ?? "") ?>;</li>
+                    <li><b>Status: </b> <?= !empty($user->status) ? "<span class='p-1 rounded bg-success'>Acesso permitido</span>": "<span class='p-1 rounded bg-danger'>Acesso revogado</span>"; ?>;</li>
                     <li><b>Data de cadastro: </b> <?= (date_fmt($user->created_at) ?? "") ?>;</li>
                     <li><b>Data de última alteração: </b> <?= !empty($user->updated_at) ? date_fmt($user->updated_at) : "" ?>.</li>
                 </ul>

@@ -119,6 +119,19 @@ function str_title(string $string): string
 }
 
 /**
+ *
+ * Formata o paragrafo de um textarea
+ * @param string $text
+ * @return string
+ */
+function str_textarea(string $text): string
+{
+    $text = str_replace(array("\r\n", "\r", "\n", PHP_EOL), "<br />", $text);
+    $arrayReplace = ["<br /><br /><br /><br /><br />", "<br /><br /><br /><br />", "<br /><br /><br />", "<br /><br />", "<br />"];
+    return "<p>" . str_replace($arrayReplace, "</p><p>", $text) . "</p>" . PHP_EOL;
+}
+
+/**
  * Função para limitar a quantidade de uma string por palavras
  *
  * @param string $string texto

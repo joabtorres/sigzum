@@ -3,13 +3,12 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col" id="pagina-header">
-            <h5>Consultar Setores</h5>
+            <h5>Consultar Campanhas Publicitárias</h5>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="<?= url() ?>"><i class="fa fa-tachometer-alt"></i> Inicial</a>
                     </li>
-                    <li class="breadcrumb-item"><a href="<?= url("sector") ?>"><i class="fa-solid fa-sitemap"></i>
-                            Setores</a></li>
+                    <li class="breadcrumb-item"><a href="<?= url("publicity") ?>"><i class="fas fa-tasks"></i> Campanhas Publicitárias</a></li>
                 </ol>
             </nav>
         </div>
@@ -18,7 +17,7 @@
     <!--<div class="row">-->
     <div class="row" id="painel_de_consulta">
         <div class="col">
-            <form method="POST" action="<?= url("/sector") ?>">
+            <form method="POST" action="<?= url("/publicity") ?>">
                 <div class="ajax_response"></div>
                 <section class="card border-default">
                     <header class="card-header bg-default">
@@ -88,13 +87,13 @@
         <div class="col mb-2 mt-2">
             <section class="card border-default">
                 <header class="card-header bg-default">
-                    <h1 class="card-title h6 mb-1 mt-1">Total de Registros Encontrados: <?= ($sectorTotal ?? "") ?></h1>
+                    <h1 class="card-title h6 mb-1 mt-1">Total de Registros Encontrados: <?= ($publicityTotal ?? "") ?></h1>
                 </header>
                 <article class="card-body py-0">
                     <div class="row">
                         <div class="col-12 my-2">
-                            <button class="btn btn-sm btn-success pull-right" type="button" data-toggle="modal" data-target="#novo-registro" title="Adicionar"><i class="fas fa-plus-square"></i>
-                                Adicionar</button>
+                            <a class="btn btn-sm btn-success pull-right" title="Adicionar" href="<?= url("publicity/register") ?>"><i class="fas fa-plus-square"></i>
+                                Adicionar</a>
                         </div>
                     </div>
                 </article>
@@ -104,27 +103,27 @@
                         <thead class="bg-secondary">
                             <tr class="">
                                 <th scope="col" class="align-middle" width="50px">#</th>
-                                <th scope="col" class="align-middle">Setor</th>
-                                <th scope="col" class="align-middle">Empresa</th>
+                                <th scope="col" class="align-middle">Campanha Publicitária</th>
                                 <th scope="col" class="align-middle">Data</th>
+                                <th scope="col" class="align-middle">Status</th>
                                 <th scope="col" class="align-middle" width="100px">Ação</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
-                            if (isset($sectors)) :
+                            if (isset($publicities)) :
                                 $qtd = 1;
-                                foreach ($sectors as $sector) :
+                                foreach ($publicities as $publicity) :
                             ?>
                                     <tr>
                                         <td class="text-center align-middle"><?php echo $qtd ?></td>
-                                        <td class="align-middle"><?= ($sector->name ?? "") ?></td>
-                                        <td class="align-middle"><?= ($sector->company()->full_name ?? "") ?></td>
-                                        <td class="align-middle"><?= date_fmt($sector->created_at) ?></td>
+                                        <td class="align-middle"><?= ($publicity->company ?? "") ?></td>
+                                        <td class="align-middle"><?= date_fmt($publicity->date, "d/m/Y") ?></td>
+                                        <td class="align-middle"><span class="p-1 rounded <?= ($publicity->status()->class_color ?? "") ?>"><?= ($publicity->status()->name ?? "") ?></span></td>
                                         <td class="align-middle table-acao text-center">
-                                            <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal_view_<?= (md5($sector->id) ?? "") ?>" title="Visualizar"><i class="fa fa-eye"></i></button>
-                                            <a class="btn btn-primary btn-sm" href="<?= url("sector/update/{$sector->id}") ?>" title="Editar"><i class="fa fa-pencil-alt"></i></a>
-                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal_remove_<?= (md5($sector->id) ?? "") ?>" title="Excluir"><i class="fa fa-trash"></i></button>
+                                            <a class="btn btn-success btn-sm" href="<?= url("publicity/view/{$publicity->id}") ?>" title="Visualizar"><i class="fa fa-eye"></i></a>
+                                            <a class="btn btn-primary btn-sm" href="<?= url("publicity/update/{$publicity->id}") ?>" title="Editar"><i class="fa fa-pencil-alt"></i></a>
+                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal_remove_<?= (md5($publicity->id) ?? "") ?>" title="Excluir"><i class="fa fa-trash"></i></button>
                                         </td>
                                     </tr>
                             <?php
@@ -145,29 +144,10 @@
         </div>
     </div>
 
-    <!--inicio da paginação-->
-
-
-    <!--fim da paginação-->
-
-    <!-- novo-registro -->
-    <?php $this->insert("sector/register", ["companies" => $companies]) ?>
-    <!-- fim modal novo-registro-->
-
-    <!-- modal para visualizar -->
     <?php
-    if (isset($sectors) && is_array($sectors)) :
-        foreach ($sectors as $sector) :
-            $this->insert("sector/view", ["sector" => $sector]);
-        endforeach;
-    endif;
-    ?>
-    <!-- fim modal para visualizar -->
-
-    <?php
-    if (isset($sectors) && is_array($sectors)) :
-        foreach ($sectors as $sector) :
-            $this->insert("sector/remove", ["sector" => $sector]);
+    if (isset($publicities) && is_array($publicities)) :
+        foreach ($publicities as $publicity) :
+            $this->insert("publicity/remove", ["publicity" => $publicity]);
         endforeach;
     endif;
     ?>

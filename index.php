@@ -31,13 +31,6 @@ $route->get("/recuperar/{code}", "AuthController@reset");
 $route->post("/recuperar/resetar", "AuthController@reset");
 
 /**
- * USER ROUTES
- */
-
-$route->get("/usuario/cadastrar", "Web@register");
-$route->post("/usuario/cadastrar", "Web@register");
-
-/**
  * COMPANY ROUTES
  */
 $route->group("/company");
@@ -86,6 +79,20 @@ $route->post("/register", "UserController@register");
 $route->get("/update/{id}", "UserController@update");
 $route->post("/update/{id}", "UserController@update");
 $route->get("/remove/{id}", "UserController@remove");
+
+/**
+ * PUBLICITY ROUTES
+ */
+$route->group("/publicity");
+$route->get("", "PublicityController@search");
+$route->post("", "PublicityController@search");
+$route->get("/{type}/{search}/{date_start}/{date_final}/{order}/{page}", "PublicityController@search");
+$route->get("/register", "PublicityController@register");
+$route->post("/register", "PublicityController@register");
+$route->get("/update/{id}", "PublicityController@update");
+$route->post("/update/{id}", "PublicityController@update");
+$route->get("/remove/{id}", "PublicityController@remove");
+$route->get("/graphic", "PublicityController@graphic");
 
 /**
  * ERROR ROUTES [400, 404,405, 501]

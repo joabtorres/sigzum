@@ -46,13 +46,13 @@
                                         <div class="invalid-feedback"><i class="fa fa-info-circle"></i> Informe o email</div>
                                     </div>
                                     <div class="col-md-12 mb-3">
-                                        <label for="ipassword">Senha: *</label>
-                                        <input type="password" name="password" id="ipassword" class="form-control" required />
+                                        <label for="ipassword">Senha: </label>
+                                        <input type="password" name="password" id="ipassword" class="form-control" />
                                         <div class="invalid-feedback"><i class="fa fa-info-circle"></i> Informe a senha</div>
                                     </div>
                                     <div class="col-md-12 mb-3">
-                                        <label for="irpassword">Repetir senha: *</label>
-                                        <input type="password" name="rpassword" id="irpassword" class="form-control" required />
+                                        <label for="irpassword">Repetir senha: </label>
+                                        <input type="password" name="rpassword" id="irpassword" class="form-control" />
                                         <div class="invalid-feedback"><i class="fa fa-info-circle"></i> Informe o repetir senha</div>
                                     </div>
                                 </div>

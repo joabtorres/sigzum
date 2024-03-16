@@ -166,35 +166,35 @@ class UserController extends Controller
                 return;
             }
 
-            $user = (new User)->bootstrap(
-                $data["first_name"],
-                $data["last_name"],
-                $data["email"],
-                $data["password"],
-                $data["sector_id"],
-                $data["status"]
-            );
+            $user = (new User)->findById($data["id"]);
+            $user->sector_id = $data["sector_id"];
+            $user->first_name = $data["first_name"];
+            $user->last_name = $data["last_name"];
+            $user->email = $data["email"];
+            $user->password = !empty($data["password"]) ? $data["password"] : $user->password;
+            $user->status = $data["status"];
+
             if (!$user->save()) {
                 $json["message"] = $user->message()->render();
                 echo json_encode($json);
                 return;
             }
-            $this->message->success("Cadastro realizado com sucesso!")->flash();
-            $json["redirect"] = url("user/register");
+            $this->message->success("Alteração realizada com sucesso!")->flash();
+            $json["redirect"] = url("user/update/{$user->id}");
             echo json_encode($json);
             return;
         }
 
         $user = (new User)->findById($data["id"]);
         $head = $this->seo->render(
-            "Novo Usuário - " . CONF_SITE_TITLE,
+            "Editar usuário - " . CONF_SITE_TITLE,
             CONF_SITE_DESC,
             url(),
             theme("/assets/images/share.jpg")
         );
         echo $this->view->render("user/edit", [
             "head" => $head,
-            "user" => user(),
+            "user" => $user,
             "sectors" => (new Sector)->find()->fetch(true)
         ]);
     }

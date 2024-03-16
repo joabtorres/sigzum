@@ -44,15 +44,15 @@
                             <a href="#sidebarDocument" data-toggle="collapse" aria-expanded="false"><i class="fas fa-angle-double-right"></i> Campanha Publicitária </a>
                             <ul class="collapse list-unstyled" id="sidebarDocument">
                                 <li>
-                                    <a href="<?= url('documento/novo-registro') ?>"><i class="fas fa-plus-square"></i> Novo
+                                    <a href="<?= url('publicity/register') ?>"><i class="fas fa-plus-square"></i> Novo
                                         Registro</a>
                                 </li>
                                 <li>
-                                    <a href="<?= url('documento/consultar') ?>"><i class="fas fa-tasks"></i> Campanhas
+                                    <a href="<?= url('publicity') ?>"><i class="fas fa-tasks"></i> Campanhas
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="<?= url('documento/grafico') ?>"><i class="fa-solid fa-chart-column"></i> Gráfico de
+                                    <a href="<?= url('publicity/graphic') ?>"><i class="fa-solid fa-chart-column"></i> Gráfico de
                                         Campanhas</a>
                                 </li>
                             </ul>
@@ -120,9 +120,9 @@
                                     <b class="caret"></b>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="user/update/<?= (user()->id ?? "") ?>"><i class="fas fa-users-cog text-primary"></i> Editar Perfil</a>
+                                    <a class="dropdown-item" href="<?= url("user/update/" . user()->id) ?>"><i class="fas fa-users-cog text-primary"></i> Editar Perfil</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="sair"><i class="fa fa-sign-out-alt text-primary"></i> Sair</a>
+                                    <a class="dropdown-item" href="<?= url("sair") ?>"><i class="fa fa-sign-out-alt text-primary"></i> Sair</a>
                                 </div>
                             </li>
                         </ul>

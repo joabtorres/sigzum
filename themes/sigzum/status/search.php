@@ -16,7 +16,7 @@
     <!--<div class="row">-->
     <div class="row" id="painel_de_consulta">
         <div class="col">
-            <form method="POST" action="<?= url("/sector") ?>">
+            <form method="POST" action="<?= url("/status") ?>">
                 <div class="ajax_response"></div>
                 <section class="card border-default">
                     <header class="card-header bg-default">
