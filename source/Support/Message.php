@@ -18,6 +18,9 @@ class Message
 
     /** @var string */
     private $type;
+    /** @var string */
+    private $icon;
+
 
     /**
      * @return string texto da mensagem formatada em html e css
@@ -28,7 +31,9 @@ class Message
     }
 
     /**
-     * @return string texto da mensagem
+     * getText function
+     *
+     * @return string|null
      */
     public function getText(): ?string
     {
@@ -36,11 +41,22 @@ class Message
     }
 
     /**
-     * @return string type da classe css
+     * getType function
+     *
+     * @return string|null
      */
     public function getType(): ?string
     {
         return $this->type;
+    }
+    /**
+     * getIcon function
+     *
+     * @return string|null
+     */
+    public function getIcon(): ?string
+    {
+        return $this->icon;
     }
 
     /**
@@ -51,6 +67,7 @@ class Message
     public function info(string $message): Message
     {
         $this->type = CONF_MESSAGE_INFO;
+        $this->icon = CONF_MESSAGE_INFO_ICON;
         $this->text = $this->filter($message);
         return $this;
     }
@@ -63,6 +80,7 @@ class Message
     public function success(string $message): Message
     {
         $this->type = CONF_MESSAGE_SUCCESS;
+        $this->icon = CONF_MESSAGE_SUCCESS_ICON;
         $this->text = $this->filter($message);
         return $this;
     }
@@ -75,6 +93,7 @@ class Message
     public function warning(string $message): Message
     {
         $this->type = CONF_MESSAGE_WARNING;
+        $this->icon = CONF_MESSAGE_WARNING_ICON;
         $this->text = $this->filter($message);
         return $this;
     }
@@ -87,6 +106,7 @@ class Message
     public function error(string $message): Message
     {
         $this->type = CONF_MESSAGE_ERROR;
+        $this->icon = CONF_MESSAGE_ERROR_ICON;
         $this->text = $this->filter($message);
         return $this;
     }
@@ -96,7 +116,12 @@ class Message
      */
     public function render(): string
     {
-        return "<div class='" . CONF_MESSAGE_CLASS . " {$this->getType()}'>{$this->getText()}</div>";
+        return "<div class='" . CONF_MESSAGE_CLASS . " {$this->getType()}'>
+        {$this->getIcon()} {$this->getText()}
+        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+            <span aria-hidden='true'>&times;</span>
+        </button>
+        </div>";
     }
 
     /**

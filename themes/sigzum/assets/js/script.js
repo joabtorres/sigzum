@@ -15,13 +15,6 @@ $(document).ready(function () {
       $(".collapse.in").toggleClass("in");
       $("a[aria-expanded=true]").attr("aria-expanded", "false");
    });
-
-   $("[data-bs-hide]").on("click", function () {
-      $("#alert-msg").toggle().addClass("oculta");
-   });
-   $("[data-hide]").on("click", function () {
-      $("#alert-msg").toggle().addClass("oculta");
-   });
    $(".custom-file-input").on("change", function () {
       var fileName = $(this).val().split("\\").pop();
       $(this)
@@ -32,20 +25,7 @@ $(document).ready(function () {
 
    //forms
    $(".custom-select").select2({ width: "100%" });
-   $("#iTipologia").select2({
-      width: "100%",
-      dropdownParent: $("#modal_atividade"),
-   });
-   $("#iAssuntoNota").select2({
-      width: "100%",
-      dropdownParent: $("#modal_nota"),
-   });
    $(".input-data").mask("99/99/9999");
-   $(".input-auto_infracao").mask("999/9999");
-   $(".input-protocolo").mask("99999/9999");
-   $(".input-dias").mask("999");
-   $(".input-data-complete").mask("99/99/9999 99:99:99");
-   $(".input-cpf").mask("999.999.999-99");
 
    /**
     * @author Joab Torres <joabtorres1508@gmail.com>
@@ -70,7 +50,6 @@ $(document).ready(function () {
       }
    });
 });
-
 /**
  * @author Joab Torres <joabtorres1508@gmail.com>
  * @description Valida o formulário que tiver a classe needs-validation

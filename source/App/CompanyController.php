@@ -73,7 +73,7 @@ class CompanyController extends Controller
             $sql_params .= "date_start={$date_start}&date_final={$date_final} 23:59:58";
         }
 
-        $companies = (new Company)->find($sql_query, $sql_params);
+        $companies = (new Company())->find($sql_query, $sql_params);
         $pager = new Pager(url("/company/{$type}/{$search}/{$date_start}/{$date_final}/{$order}/"));
         $pager->pager($companies->count(), 30, $page);
 
@@ -118,7 +118,7 @@ class CompanyController extends Controller
                 return;
             }
 
-            $company = (new Company)->bootstrap(
+            $company = (new Company())->bootstrap(
                 $data["full_name"],
                 $data["address"],
                 $data["cnpj"],
@@ -160,7 +160,7 @@ class CompanyController extends Controller
                 return;
             }
 
-            $company = (new Company)->findById($data["company"]);
+            $company = (new Company())->findById($data["company"]);
             $company->full_name = $data["full_name"];
             $company->address = $data["address"];
             $company->cnpj = $data["cnpj"];
@@ -177,7 +177,7 @@ class CompanyController extends Controller
             return;
         }
 
-        $company = (new Company)->findById($data["company"]);
+        $company = (new Company())->findById($data["company"]);
         if (!$company) {
             $this->message->warning("Oops {$this->user->first_name}! Você tentou acessar um registro inexistente no banco de dados.")->flash();
             redirect("company");
@@ -202,7 +202,7 @@ class CompanyController extends Controller
      */
     public function remove(array $data): void
     {
-        $company = (new Company)->find("id = :company", "company={$data["company"]}")->fetch();
+        $company = (new Company())->find("id = :company", "company={$data["company"]}")->fetch();
         if (!$company) {
             $this->message->warning("Ooops {$this->user->first_name}! Você tentou excluir um registro inexistente do banco de dados.")->flash();
         } else {

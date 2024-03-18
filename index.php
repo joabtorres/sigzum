@@ -88,11 +88,16 @@ $route->get("", "PublicityController@search");
 $route->post("", "PublicityController@search");
 $route->get("/{type}/{search}/{date_start}/{date_final}/{order}/{page}", "PublicityController@search");
 $route->get("/register", "PublicityController@register");
+$route->get("/view/{id}", "PublicityController@view");
 $route->post("/register", "PublicityController@register");
 $route->get("/update/{id}", "PublicityController@update");
 $route->post("/update/{id}", "PublicityController@update");
 $route->get("/remove/{id}", "PublicityController@remove");
 $route->get("/graphic", "PublicityController@graphic");
+
+
+$route->post("/anexo/register", "PublicityController@registerAnexo");
+$route->get("/anexo/remove/{id}", "PublicityController@removeAnexo");
 
 /**
  * ERROR ROUTES [400, 404,405, 501]

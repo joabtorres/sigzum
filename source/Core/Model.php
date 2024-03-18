@@ -62,10 +62,11 @@ abstract class Model
         string $entity,
         array  $protected,
         array  $required
-    )
-    {
+    ) {
         self::$entity = $entity;
-        self::$protected = array_merge($protected, ['created_at', "updated_at"]
+        self::$protected = array_merge(
+            $protected,
+            ['created_at', "updated_at"]
         );
         self::$required = $required;
 
@@ -151,8 +152,7 @@ abstract class Model
         string  $terms = null,
         ?string $params = null,
         string  $columns = "*"
-    )
-    {
+    ) {
         if ($terms) {
             $this->query = "SELECT $columns FROM " . static::$entity
                 . " WHERE {$terms}";
@@ -272,7 +272,7 @@ abstract class Model
 
             $stmt = Connect::getInstance()->prepare(
                 "INSERT INTO " . static::$entity
-                . " ({$columns}) VALUES ({$values})"
+                    . " ({$columns}) VALUES ({$values})"
             );
             $stmt->execute($this->filter($data));
 
@@ -297,8 +297,7 @@ abstract class Model
         array  $data,
         string $terms,
         string $params
-    ): ?int
-    {
+    ): ?int {
         try {
             $dateSet = [];
             foreach ($data as $bind => $value) {

@@ -55,7 +55,7 @@ class Upload
             return null;
         }
 
-        return $upload->upload($image, $name, $width, CONF_IMAGE_QUALITY);
+        return str_replace(CONF_UPLOAD_DIR . "/", "", $upload->upload($image, $name, $width, CONF_IMAGE_QUALITY));
     }
 
     /**
@@ -75,7 +75,7 @@ class Upload
             return null;
         }
 
-        return $upload->upload($file, $name);
+        return str_replace(CONF_UPLOAD_DIR . "/", "", $upload->upload($file, $name));
     }
 
     /**
@@ -95,7 +95,7 @@ class Upload
             return null;
         }
 
-        return $upload->upload($media, $name);
+        return str_replace(CONF_UPLOAD_DIR . "/", "", $upload->upload($media, $name));
     }
 
     /**
@@ -109,6 +109,26 @@ class Upload
     {
         if (file_exists($filePath) && is_file($filePath)) {
             unlink($filePath);
+        }
+    }
+    /**
+     * fromAllTypes function envio de upload para todos os tipos existentes da class Uploader
+     *
+     * @param array $file
+     * @param string $name
+     * @return string|null
+     */
+    public function fromAllTypes(array $file, $name): ?string
+    {
+        if (in_array($file['type'], File::isAllowed())) {
+            return $this->file($file, $name);
+        } else if (in_array($file['type'], Media::isAllowed())) {
+            return $this->media($file, $name);
+        } else if (in_array($file['type'], Image::isAllowed())) {
+            return $this->image($file, $name);
+        } else {
+            $this->message->error("Você não selecionou um arquivo válido");
+            return null;
         }
     }
 }

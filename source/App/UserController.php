@@ -74,7 +74,7 @@ class UserController extends Controller
             $sql_params .= "date_start={$date_start}&date_final={$date_final} 23:59:58";
         }
 
-        $users = (new User)->find($sql_query, $sql_params);
+        $users = (new User())->find($sql_query, $sql_params);
         $pager = new Pager(url("/user/{$type}/{$search}/{$date_start}/{$date_final}/{$order}/"));
         $pager->pager($users->count(), 30, $page);
 
@@ -92,7 +92,7 @@ class UserController extends Controller
                 ->fetch(true),
             "userTotal" => $users->count(),
             "paginator" => $pager->render(),
-            "sectors" => (new Sector)->find()->fetch(true)
+            "sectors" => (new Sector())->find()->fetch(true)
         ]);
     }
     /**
@@ -115,7 +115,7 @@ class UserController extends Controller
                 return;
             }
 
-            $user = (new User)->bootstrap(
+            $user = (new User())->bootstrap(
                 $data["first_name"],
                 $data["last_name"],
                 $data["email"],
@@ -142,7 +142,7 @@ class UserController extends Controller
         );
         echo $this->view->render("user/register", [
             "head" => $head,
-            "sectors" => (new Sector)->find()->fetch(true)
+            "sectors" => (new Sector())->find()->fetch(true)
         ]);
     }
 
@@ -166,7 +166,7 @@ class UserController extends Controller
                 return;
             }
 
-            $user = (new User)->findById($data["id"]);
+            $user = (new User())->findById($data["id"]);
             $user->sector_id = $data["sector_id"];
             $user->first_name = $data["first_name"];
             $user->last_name = $data["last_name"];
@@ -185,7 +185,7 @@ class UserController extends Controller
             return;
         }
 
-        $user = (new User)->findById($data["id"]);
+        $user = (new User())->findById($data["id"]);
         $head = $this->seo->render(
             "Editar usuário - " . CONF_SITE_TITLE,
             CONF_SITE_DESC,
@@ -195,7 +195,7 @@ class UserController extends Controller
         echo $this->view->render("user/edit", [
             "head" => $head,
             "user" => $user,
-            "sectors" => (new Sector)->find()->fetch(true)
+            "sectors" => (new Sector())->find()->fetch(true)
         ]);
     }
 
@@ -207,7 +207,7 @@ class UserController extends Controller
      */
     public function remove(array $data): void
     {
-        $user = (new User)->find("id = :id", "id={$data["id"]}")->fetch();
+        $user = (new User())->find("id = :id", "id={$data["id"]}")->fetch();
         if (!$user) {
             $this->message->warning("Ooops {$this->user->first_name}! Você tentou excluir um registro inexistente do banco de dados.")->flash();
         } else {

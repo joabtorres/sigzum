@@ -59,11 +59,15 @@ define("CONF_PASSWD_OPTION", ["cost" => 10]);
 /**
  * MESSAGE
  */
-define("CONF_MESSAGE_CLASS", "p-2 mt-2 mb-2 text-center");
+define("CONF_MESSAGE_CLASS", "mt-2 mb-2 alert alert-dismissible fade show");
 define("CONF_MESSAGE_INFO", "bg-info");
+define("CONF_MESSAGE_INFO_ICON", "<i class='fa-solid fa-circle-info'></i>");
 define("CONF_MESSAGE_SUCCESS", "bg-success");
+define("CONF_MESSAGE_SUCCESS_ICON", "<i class='fa-solid fa-check'></i>");
 define("CONF_MESSAGE_WARNING", "bg-warning");
+define("CONF_MESSAGE_WARNING_ICON", "<i class='fa-solid fa-triangle-exclamation'></i>");
 define("CONF_MESSAGE_ERROR", "bg-danger");
+define("CONF_MESSAGE_ERROR_ICON", "<i class='fa-solid fa-xmark'></i>");
 
 /**
  * VIEW

@@ -5,7 +5,7 @@ namespace Source\Models;
 use Source\Core\Model;
 
 /**
- * Class Company
+ * Class Publicity
  *
  * @package Source\Model
  * @author  Joab T. Alencar <contato@joabtorres.com.br>
@@ -14,14 +14,14 @@ use Source\Core\Model;
 class Publicity extends Model
 {
     /**
-     * Company constructor.
+     * Publicity constructor.
      */
     public function __construct()
     {
         parent::__construct(
             "publicities",
             ["id"],
-            ["status_id", "user_id", "company", "date", "description"]
+            ["status_id", "user_id", "campaign", "date", "description"]
         );
     }
     /**
@@ -29,7 +29,7 @@ class Publicity extends Model
      *
      * @param integer $status_id
      * @param integer $user_id
-     * @param string $company
+     * @param string $campaign
      * @param string $date
      * @param string|null $description
      * @param string|null $date_start
@@ -39,7 +39,7 @@ class Publicity extends Model
     public function bootstrap(
         int $status_id,
         int $user_id,
-        string $company,
+        string $campaign,
         string $date,
         ?string $description = null,
         ?string $date_start = null,
@@ -47,11 +47,11 @@ class Publicity extends Model
     ): Publicity {
         $this->status_id = $status_id;
         $this->user_id = $user_id;
-        $this->company = $company;
+        $this->campaign = $campaign;
         $this->date = $date;
         $this->description = $description;
         $this->date_start = $date_start;
-        $this->date_final = $date_end;
+        $this->date_end = $date_end;
         return $this;
     }
     /**
@@ -61,7 +61,7 @@ class Publicity extends Model
      */
     public function status(): Status
     {
-        return (new Status)->findById($this->status_id);
+        return (new Status())->findById($this->status_id);
     }
     /**
      * user function
@@ -70,7 +70,7 @@ class Publicity extends Model
      */
     public function user(): User
     {
-        return (new User)->findById($this->user_id);
+        return (new User())->findById($this->user_id);
     }
     /**
      * save function
@@ -83,6 +83,12 @@ class Publicity extends Model
             $this->message->warning("O nome da campanha, data comemorativa, descrição e status são campos obrigatórios.");
             return false;
         }
+
+        if ($this->find("campaign=:name AND date=:date", "name={$this->campaign}&date={$this->date}")) {
+            $this->message()->info("Está campanha publicitária já está registrada no sistema.");
+            return false;
+        }
+
         list($day, $month, $year) = explode("/", $this->date);
         $this->date = "{$year}-{$month}-{$day}";
         if (!empty($this->date_start)) {
@@ -95,7 +101,6 @@ class Publicity extends Model
         }
 
         $this->description = str_textarea($this->description);
-        var_dump($this->data());
         return  parent::save();
     }
 }

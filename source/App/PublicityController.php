@@ -7,10 +7,12 @@ use Source\Core\Controller;
 use Source\Models\Auth;
 use Source\Models\Company;
 use Source\Models\Publicity;
+use Source\Models\Publicity\Anexo;
 use Source\Models\Sector;
 use Source\Models\Status;
 use Source\Support\Message;
 use Source\Support\Pager;
+use Source\Support\Upload;
 
 /**
  * Class PublicityController Controller
@@ -78,7 +80,7 @@ class PublicityController extends Controller
         $sql_query = "id > 0";
         $sql_params = null;
         if ($type != "type" && $search != "search") {
-            $sql_query = "company LIKE '%{$search}%'";
+            $sql_query = "campaign LIKE '%{$search}%'";
         }
 
         if ($date_start != "start" && $date_final != "final") {
@@ -86,7 +88,7 @@ class PublicityController extends Controller
             $sql_params .= "date_start={$date_start}&date_final={$date_final} 23:59:58";
         }
 
-        $publicity = (new Publicity)->find($sql_query, $sql_params);
+        $publicity = (new Publicity())->find($sql_query, $sql_params);
         $pager = new Pager(url("/publicity/{$type}/{$search}/{$date_start}/{$date_final}/{$order}/"));
         $pager->pager($publicity->count(), 30, $page);
 
@@ -100,7 +102,7 @@ class PublicityController extends Controller
             "head" => $head,
             "publicities" => $publicity->limit($pager->limit())
                 ->offset($pager->offset())
-                ->order("date {$order}")
+                ->order("id {$order}")
                 ->fetch(true),
             "publicityTotal" => $publicity->count(),
             "paginator" => $pager->render()
@@ -116,10 +118,10 @@ class PublicityController extends Controller
     {
         if (!empty($data["csrf"])) {
 
-            $publicity = (new Publicity)->bootstrap(
+            $publicity = (new Publicity())->bootstrap(
                 $data["status_id"],
                 $this->user->id,
-                $data["company"],
+                $data["campaign"],
                 $data["date"],
                 $data["description"],
                 $data["date_start"],
@@ -131,6 +133,10 @@ class PublicityController extends Controller
                 echo json_encode($json);
                 return;
             }
+            $this->message->success("Cadastro realizado com sucesso!")->flash();
+            $json["redirect"] = url("publicity/register");
+            echo json_encode($json);
+            return;
         }
 
 
@@ -142,7 +148,114 @@ class PublicityController extends Controller
         );
         echo $this->view->render("publicity/register", [
             "head" => $head,
-            "status" => (new Status)->find()->fetch(true)
+            "status" => (new Status())->find()->fetch(true)
         ]);
+    }
+
+    public function view(array $data): void
+    {
+        $publicity = (new Publicity())->findById($data["id"]);
+        if (!$publicity) {
+            $this->message->error("Ooops {$this->user->first_name}! Você tentou acessa um registro inexistente!")->flash();
+            redirect(url_back());
+            return;
+        }
+        $head = $this->seo->render(
+            "Campanha - " . CONF_SITE_TITLE,
+            CONF_SITE_DESC,
+            url(),
+            theme("/assets/images/share.jpg")
+        );
+
+        echo $this->view->render("publicity/view", [
+            "head" => $head,
+            "publicity" => $publicity,
+            "anexos" => (new Anexo())->find("publicity_id=:publicity", "publicity={$publicity->id}")->fetch(true)
+        ]);
+    }
+
+    /**
+     * remove function
+     *
+     * @param array $data
+     * @return void
+     */
+    public function remove(array $data): void
+    {
+        $publicity = (new Publicity())->find("id = :id", "id={$data["id"]}")->fetch();
+        if (!$publicity) {
+            $this->message->warning("Ooops {$this->user->first_name}! Você tentou excluir um registro inexistente do banco de dados.")->flash();
+        } else {
+            $publicity->destroy();
+            $this->message->success("Registro removido com sucesso!")->flash();
+        }
+        redirect("publicity");
+    }
+    /**
+     * AnexoRegister function
+     *
+     * @param array $data
+     * @return void
+     */
+    public function registerAnexo(array $data): void
+    {
+        if (!empty($data["csrf"])) {
+
+            if (!$data["description"]) {
+                $json["message"] = $this->message->warning("Informe uma descrição")->render();
+                echo json_encode($json);
+                return;
+            }
+
+            if (empty($_FILES["url"])) {
+                $json["message"] = $this->message->warning("Ooops {$this->user->first_name}, selecione um arquivo para upload.")->render();
+                echo json_encode($json);
+                return;
+            }
+
+            $anexo = (new Anexo())->bootstrap(
+                $data['publicity_id'],
+                $this->user->id,
+                $data["description"]
+            );
+
+            $upload = new Upload();
+            if (!$anexo->url = $upload->fromAllTypes($_FILES["url"], date('Y-m-d') . md5(rand(1, 666666) . time()))) {
+                $json["message"] = $upload->message()->render();
+                echo json_encode($json);
+                return;
+            }
+            if (!$anexo->save()) {
+                $json["message"] = $anexo->message()->render();
+                echo json_encode($json);
+                return;
+            }
+            $this->message->success("Cadastro realizado com sucessso!")->flash();
+            $json["redirect"] = url("publicity/view/{$data["publicity_id"]}");
+            echo json_encode($json);
+            return;
+        }
+    }
+
+    /**
+     * removeAnexo function
+     *
+     * @param array $data
+     * @return void
+     */
+    public function removeAnexo(array $data): void
+    {
+        $anexo = (new Anexo())->findById($data["id"]);
+        $publicity = $anexo->publicity_id;
+        if (!$anexo) {
+            $this->message->warning("Ooops {$this->user->first_name}! Você tentou excluir um registro inexistente do banco de dados.")->flash();
+        } else {
+            $upload = new Upload();
+            $upload->remove(CONF_UPLOAD_DIR . "/{$anexo->url}");
+            $anexo->destroy();
+            $this->message->success("Registro removido com sucesso!")->flash();
+            redirect("publicity/view/{$publicity}");
+        }
+        redirect(url_back());
     }
 }

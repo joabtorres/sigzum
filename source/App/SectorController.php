@@ -73,7 +73,7 @@ class SectorController extends Controller
             $sql_params .= "date_start={$date_start}&date_final={$date_final} 23:59:58";
         }
 
-        $sectors = (new Sector)->find($sql_query, $sql_params);
+        $sectors = (new Sector())->find($sql_query, $sql_params);
         $pager = new Pager(url("/sector/{$type}/{$search}/{$date_start}/{$date_final}/{$order}/"));
         $pager->pager($sectors->count(), 30, $page);
 
@@ -91,7 +91,7 @@ class SectorController extends Controller
                 ->fetch(true),
             "sectorTotal" => $sectors->count(),
             "paginator" => $pager->render(),
-            "companies" => (new Company)->find()->fetch(true)
+            "companies" => (new Company())->find()->fetch(true)
         ]);
     }
     /**
@@ -109,7 +109,7 @@ class SectorController extends Controller
                 return;
             }
 
-            $sector = (new Sector)->bootstrap(
+            $sector = (new Sector())->bootstrap(
                 $data["company"],
                 $data["name"],
                 $data["abbreviation"]
@@ -138,7 +138,7 @@ class SectorController extends Controller
                 echo json_encode($json);
                 return;
             }
-            $sectorUpdate = (new Sector)->findById($data["id"]);
+            $sectorUpdate = (new Sector())->findById($data["id"]);
             $sectorUpdate->name = $data["name"];
             $sectorUpdate->company_id = $data["company"];
             $sectorUpdate->abbreviation = $data["abbreviation"];
@@ -153,7 +153,7 @@ class SectorController extends Controller
             return;
         }
 
-        $sector = (new Sector)->findById($data["id"]);
+        $sector = (new Sector())->findById($data["id"]);
         if (!$sector) {
             $this->message->warning("Oops {$this->user->first_name}! Você tentou acessar um registro inexistente no banco de dados.")->flash();
             redirect("sector");
@@ -168,7 +168,7 @@ class SectorController extends Controller
         echo $this->view->render("sector/edit", [
             "head" => $head,
             "sector" => $sector,
-            "companies" => (new Company)->find()->fetch(true)
+            "companies" => (new Company())->find()->fetch(true)
         ]);
     }
     /**
@@ -179,13 +179,13 @@ class SectorController extends Controller
      */
     public function remove(array $data): void
     {
-        $sector = (new Sector)->find("id = :id", "id={$data["id"]}")->fetch();
+        $sector = (new Sector())->find("id = :id", "id={$data["id"]}")->fetch();
         if (!$sector) {
             $this->message->warning("Ooops {$this->user->first_name}! Você tentou excluir um registro inexistente do banco de dados.")->flash();
         } else {
             $sector->destroy();
             $this->message->success("Registro removido com sucesso!")->flash();
         }
-        redirect("sector");
+        redirect("publicity");
     }
 }

@@ -73,7 +73,7 @@ class StatusController extends Controller
             $sql_params .= "date_start={$date_start}&date_final={$date_final} 23:59:58";
         }
 
-        $status = (new Status)->find($sql_query, $sql_params);
+        $status = (new Status())->find($sql_query, $sql_params);
         $pager = new Pager(url("/status/{$type}/{$search}/{$date_start}/{$date_final}/{$order}/"));
         $pager->pager($status->count(), 30, $page);
 
@@ -91,7 +91,7 @@ class StatusController extends Controller
                 ->fetch(true),
             "statusTotal" => $status->count(),
             "paginator" => $pager->render(),
-            "companies" => (new Company)->find()->fetch(true)
+            "companies" => (new Company())->find()->fetch(true)
         ]);
     }
     /**
@@ -109,7 +109,7 @@ class StatusController extends Controller
                 return;
             }
 
-            $status = (new Status)->bootstrap(
+            $status = (new Status())->bootstrap(
                 $data["company"],
                 $data["name"],
                 $data["class_color"]
@@ -138,7 +138,7 @@ class StatusController extends Controller
                 echo json_encode($json);
                 return;
             }
-            $statusUpdate = (new Status)->findById($data["id"]);
+            $statusUpdate = (new Status())->findById($data["id"]);
             $statusUpdate->name = $data["name"];
             $statusUpdate->company_id = $data["company"];
             $statusUpdate->class_color = $data["class_color"];
@@ -153,7 +153,7 @@ class StatusController extends Controller
             return;
         }
 
-        $status = (new Status)->findById($data["id"]);
+        $status = (new Status())->findById($data["id"]);
         if (!$status) {
             $this->message->warning("Oops {$this->user->first_name}! Você tentou acessar um registro inexistente no banco de dados.")->flash();
             redirect("status");
@@ -168,7 +168,7 @@ class StatusController extends Controller
         echo $this->view->render("status/edit", [
             "head" => $head,
             "status" => $status,
-            "companies" => (new Company)->find()->fetch(true)
+            "companies" => (new Company())->find()->fetch(true)
         ]);
     }
     /**
@@ -179,7 +179,7 @@ class StatusController extends Controller
      */
     public function remove(array $data): void
     {
-        $status = (new Status)->find("id = :id", "id={$data["id"]}")->fetch();
+        $status = (new Status())->find("id = :id", "id={$data["id"]}")->fetch();
         if (!$status) {
             $this->message->warning("Ooops {$this->user->first_name}! Você tentou excluir um registro inexistente do banco de dados.")->flash();
         } else {

@@ -117,7 +117,7 @@
                             ?>
                                     <tr>
                                         <td class="text-center align-middle"><?php echo $qtd ?></td>
-                                        <td class="align-middle"><?= ($publicity->company ?? "") ?></td>
+                                        <td class="align-middle"><?= ($publicity->campaign ?? "") ?></td>
                                         <td class="align-middle"><?= date_fmt($publicity->date, "d/m/Y") ?></td>
                                         <td class="align-middle"><span class="p-1 rounded <?= ($publicity->status()->class_color ?? "") ?>"><?= ($publicity->status()->name ?? "") ?></span></td>
                                         <td class="align-middle table-acao text-center">

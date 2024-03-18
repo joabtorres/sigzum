@@ -29,7 +29,7 @@
                         <div class="form-row">
                             <div class="col-md-8 mb-3">
                                 <label for="icompany">Campanha Publicitária: *</label>
-                                <input type="text" name="company" id="icompany" class="form-control" required />
+                                <input type="text" name="campaign" id="icompany" class="form-control" required />
                                 <div class="invalid-feedback"><i class="fa fa-info-circle"></i> Informe o nome da campanha</div>
                             </div>
                             <div class="col-md-4 mb-3">
@@ -55,13 +55,13 @@
                                 <div class="invalid-feedback">Informe o status</div>
                             </div>
                             <div class="col-md-4 mb-3">
-                                <label for="idatei">Data de início: *</label>
-                                <input type="text" name="date_start" id="idatei" class="form-control date_serach input-data" required />
+                                <label for="idatei">Data de início: </label>
+                                <input type="text" name="date_start" id="idatei" class="form-control date_serach input-data" />
                                 <div class="invalid-feedback"><i class="fa fa-info-circle"></i> Informe a data comemorativa</div>
                             </div>
                             <div class="col-md-4 mb-3">
-                                <label for="idatee">Data de termino: *</label>
-                                <input type="text" name="date_end" id="idatee" class="form-control date_serach input-data" required />
+                                <label for="idatee">Data de termino: </label>
+                                <input type="text" name="date_end" id="idatee" class="form-control date_serach input-data" />
                                 <div class="invalid-feedback"><i class="fa fa-info-circle"></i> Informe a data comemorativa</div>
                             </div>
                         </div>

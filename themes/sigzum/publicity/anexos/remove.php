@@ -1,4 +1,4 @@
-<section class="modal fade" id="modal_remove_<?= md5($publicity->id) ?>" tabindex="-1" role="dialog">
+<section class="modal fade" id="modal_remove_<?= md5($anexo->id) ?>" tabindex="-1" role="dialog">
     <article class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <section class="modal-content">
             <header class="modal-header bg-danger text-while">
@@ -9,15 +9,15 @@
             </header>
             <article class="modal-body">
                 <ul class="list-unstyled">
-                    <li><b>Campanha: </b> <?= ($publicity->campaign ?? "") ?>;</li>
-                    <li><b>Data: </b> <?= (date_fmt($publicity->date, "d/m/Y") ?? "") ?>;</li>
-                    <li><b>Data de cadastro: </b> <?= (date_fmt($publicity->created_at) ?? "") ?>;</li>
-                    <li><b>Data de última alteração: </b> <?= !empty($publicity->updated_at) ? date_fmt($publicity->updated_at) : "" ?>.</li>
+                    <li><b>Nome: </b> <?= ($anexo->description ?? "") ?>;</li>
+                    <li><b>Usuario: </b> <?= ("{$anexo->user()->first_name} {$anexo->user()->last_name}" ?? "") ?>;</li>
+                    <li><b>Data de cadastro: </b> <?= (date_fmt($anexo->created_at) ?? "") ?>;</li>
+                    <li><b>Data de última alteração: </b> <?= !empty($anexo->updated_at) ? date_fmt($anexo->updated_at) : "" ?>.</li>
                 </ul>
                 <p class="text-justify text-danger"><span class="font-bold">OBS : </span> Ao clicar em "Excluir", este registro e todos registos relacionados ao mesmo deixaram de existir no sistema.</p>
             </article>
             <footer class="modal-footer">
-                <a class="btn btn-danger pull-left" href="<?= url("publicity/remove/{$publicity->id}") ?>"> <i class="fa fa-trash"></i> Excluir</a>
+                <a class="btn btn-danger pull-left" href="<?= url("publicity/anexo/remove/{$anexo->id}") ?>"> <i class="fa fa-trash"></i> Excluir</a>
                 <button class="btn btn-default" type="button" data-dismiss="modal"><i class="fa fa-times"></i> Fechar</button>
             </footer>
         </section>
