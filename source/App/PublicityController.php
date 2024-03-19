@@ -5,10 +5,8 @@ namespace Source\App;
 use Source\Core\Connect;
 use Source\Core\Controller;
 use Source\Models\Auth;
-use Source\Models\Company;
 use Source\Models\Publicity;
 use Source\Models\Publicity\Anexo;
-use Source\Models\Sector;
 use Source\Models\Status;
 use Source\Support\Message;
 use Source\Support\Pager;
@@ -36,7 +34,7 @@ class PublicityController extends Controller
         //RESTRIÇÃO
         if (!$this->user = Auth::user()) {
             (new Message())->warning("Efetue login para acessar o sistema.")->flash();
-            redirect("/entrar");
+            redirect("/login");
         }
     }
     /**
@@ -57,6 +55,7 @@ class PublicityController extends Controller
     public function search(?array $data): void
     {
         $data = filter_var_array($data, FILTER_SANITIZE_SPECIAL_CHARS);
+        $status = !empty($data["status"]) ? $data["status"] : "status";
         $type = !empty($data["type"]) ? $data["type"] : "type";
         $search = !empty($data["search"]) && !empty($type) ? $data["search"] : "search";
         $date_start = !empty($data["date_start"]) ? $data["date_start"] : "start";
@@ -72,44 +71,48 @@ class PublicityController extends Controller
                 list($day, $month, $year) = explode("/", $date_final);
                 $date_final = "{$year}-{$month}-{$day}";
             }
-            $json["redirect"] = url("publicity/{$type}/{$search}/{$date_start}/{$date_final}/{$order}/1");
+            $json["redirect"] = url("publicity/{$status}/{$type}/{$search}/{$date_start}/{$date_final}/{$order}/1");
             echo json_encode($json);
             return;
         }
 
-        $sql_query = "id > 0";
-        $sql_params = null;
-        if ($type != "type" && $search != "search") {
-            $sql_query = "campaign LIKE '%{$search}%'";
+        $sql_query = ":date < date";
+        $sql_params = "date=" . date_fmt("now", "Y-m-d");
+        if ($status != "status") {
+            $sql_query .= " AND status_id=:status";
+            $sql_params .= "&status={$status}";
         }
-
+        if ($type != "type" && $search != "search") {
+            $sql_query .= "AND campaign LIKE '%{$search}%'";
+        }
         if ($date_start != "start" && $date_final != "final") {
             $sql_query .= " AND created_at BETWEEN :date_start AND :date_final";
-            $sql_params .= "date_start={$date_start}&date_final={$date_final} 23:59:58";
+            $sql_params .= "&date_start={$date_start}&date_final={$date_final} 23:59:58";
         }
 
         $publicity = (new Publicity())->find($sql_query, $sql_params);
-        $pager = new Pager(url("/publicity/{$type}/{$search}/{$date_start}/{$date_final}/{$order}/"));
+        $pager = new Pager(url("/publicity/{$status}/{$type}/{$search}/{$date_start}/{$date_final}/{$order}/"));
         $pager->pager($publicity->count(), 30, $page);
 
         $head = $this->seo->render(
-            "Setores - " . CONF_SITE_TITLE,
+            "Campanha Publicitária - " . CONF_SITE_TITLE,
             CONF_SITE_DESC,
             url(),
             theme("/assets/images/share.jpg")
         );
-        echo $this->view->render("publicity\search", [
+        echo $this->view->render("publicity/search", [
             "head" => $head,
             "publicities" => $publicity->limit($pager->limit())
                 ->offset($pager->offset())
-                ->order("id {$order}")
+                ->order("date {$order}")
                 ->fetch(true),
             "publicityTotal" => $publicity->count(),
-            "paginator" => $pager->render()
+            "paginator" => $pager->render(),
+            "status" => (new Status())->find()->fetch(true)
         ]);
     }
     /**
-     * Undocumented function
+     * register function
      *
      * @param array $data
      * @return void
@@ -139,9 +142,8 @@ class PublicityController extends Controller
             return;
         }
 
-
         $head = $this->seo->render(
-            "Novo Usuário - " . CONF_SITE_TITLE,
+            "Nova campanha publicitária - " . CONF_SITE_TITLE,
             CONF_SITE_DESC,
             url(),
             theme("/assets/images/share.jpg")
@@ -151,7 +153,61 @@ class PublicityController extends Controller
             "status" => (new Status())->find()->fetch(true)
         ]);
     }
+    /**
+     * update function
+     *
+     * @param array $data
+     * @return void
+     */
+    public function update(array $data): void
+    {
+        if (!empty($data["csrf"])) {
 
+            $publicity = (new Publicity())->findById($data["id"]);
+            $publicity->campaign = $data["campaign"];
+            $publicity->date = $data["date"];
+            $publicity->description = $data["description"];
+            $publicity->status_id = $data["status_id"];
+            $publicity->date_start = !empty($data["date_start"]) ? $data["date_start"] : null;
+            $publicity->date_end = !empty($data["date_end"]) ? $data["date_end"] : null;
+
+            if (!$publicity->save()) {
+                $json['message'] = $publicity->message()->render();
+                echo json_encode($json);
+                return;
+            }
+            $this->message->success("Alteração realizada com sucesso!")->flash();
+            $json["redirect"] = url("publicity/view/{$publicity->id}");
+            echo json_encode($json);
+            return;
+        }
+
+        $publicity = (new Publicity())->findById($data["id"]);
+        if (!$publicity) {
+            $this->message->warning("Oops {$this->user->first_name}! Você tentou acessar um registro inexistente no banco de dados.")->flash();
+            redirect("publicity");
+            return;
+        }
+
+        $head = $this->seo->render(
+            "Editar Campanha - " . CONF_SITE_TITLE,
+            CONF_SITE_DESC,
+            url(),
+            theme("/assets/images/share.jpg")
+        );
+        echo $this->view->render("publicity/edit", [
+            "head" => $head,
+            "status" => (new Status())->find()->fetch(true),
+            "publicity" => $publicity
+        ]);
+    }
+
+    /**
+     * view function
+     *
+     * @param array $data
+     * @return void
+     */
     public function view(array $data): void
     {
         $publicity = (new Publicity())->findById($data["id"]);
@@ -186,13 +242,20 @@ class PublicityController extends Controller
         if (!$publicity) {
             $this->message->warning("Ooops {$this->user->first_name}! Você tentou excluir um registro inexistente do banco de dados.")->flash();
         } else {
+            $anexo = (new Anexo)->find("publicity_id=:publicity", "publicity={$publicity->id}");
+            if (!empty($anexo)) {
+                foreach ($anexo as $anexoItem) {
+                    (new Upload())->remove(CONF_UPLOAD_DIR . "/{$anexoItem->url}");
+                }
+                $anexo->delete("publicity_id=:publicity", "publicity={$publicity->id}");
+            }
             $publicity->destroy();
             $this->message->success("Registro removido com sucesso!")->flash();
         }
         redirect("publicity");
     }
     /**
-     * AnexoRegister function
+     * registerAnexo function
      *
      * @param array $data
      * @return void

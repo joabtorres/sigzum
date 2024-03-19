@@ -19,7 +19,7 @@
         <div class="col">
             <?= flash() ?>
             <button type="button" class="btn pull-right btn-danger btn-sm" data-toggle="modal" data-target="#modal_remove_<?= md5($publicity->id) ?>" title="Excluir"><i class="fa fa-trash"></i> Excluir</button>
-            <a href="<?= url("publicity/edit/{$publicity->id}") ?>" class="btn pull-right btn-primary btn-sm mr-1" title="Editar"><i class="fa fa-pencil-alt"></i> Editar</a>
+            <a href="<?= url("publicity/update/{$publicity->id}") ?>" class="btn pull-right btn-primary btn-sm mr-1" title="Editar"><i class="fa fa-pencil-alt"></i> Editar</a>
         </div>
     </div>
     <div class="row">
@@ -36,7 +36,7 @@
                     <div class="row">
                         <div class="col-md-4 mb-2"><span class="text-primary d-block">Data comemorativa: </span> <?= (date_fmt($publicity->date, "d/m/Y") ?? "") ?></div>
                         <div class="col-md-4 mb-2"><span class="text-primary d-block">Data inicial da campanha: </span> <?= !empty($publicity->date_start) ? date_fmt($publicity->date_start, "d/m/Y") : "Não definido"; ?></div>
-                        <div class="col-md-4 mb-2"><span class="text-primary d-block">Data Final da campanha: </span> <?= !empty($publicity->date_end) ? date_fmt($publicity->date_end, "d/m/Y") : "Não definido"; ?> </div>
+                        <div class="col-md-4 mb-2"><span class="text-primary d-block">Data final da campanha: </span> <?= !empty($publicity->date_end) ? date_fmt($publicity->date_end, "d/m/Y") : "Não definido"; ?> </div>
                     </div>
                     <div class="row">
                         <div class="col mb-2"><span class="text-primary d-block">Descrição: </span> <?= ($publicity->description ?? "") ?></div>

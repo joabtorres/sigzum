@@ -1,11 +1,11 @@
-<?php $this->layout("auth\_theme", ["head" => $head]); ?>
+<?php $this->layout("auth/_theme", ["head" => $head]); ?>
 
 <section class="offset-lg-1 offset-md-2 col-lg-10 me-auto">
     <h5 class="text-white"><strong>Criar nova senha</strong></h5>
     <p class="text-white">Informe e repita uma nova senha para recuperar o acesso.</p>
-    <form class="auth_form" data-reset="true" action="<?= url("/recuperar/resetar") ?>" method="post" enctype="multipart/form-data">
+    <form class="auth_form" data-reset="true" action="<?= url("/forget/reset") ?>" method="post" enctype="multipart/form-data">
         <?= csrf_input() ?>
-        <input type="hidden" name="code" value="<?=$code;?>"/>
+        <input type="hidden" name="code" value="<?= $code; ?>" />
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <div class="input-group-text bg-primary text-white border-primary pe-4 ps-4"><i class="fa-solid fa-lock"></i></div>

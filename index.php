@@ -22,13 +22,13 @@ $route->get("/", "HomeController@home");
  * Auth ROUTES
  */
 $route->group(null);
-$route->get("/entrar", "AuthController@login");
-$route->post("/entrar", "AuthController@login");
-$route->get("/sair", "AuthController@logout");
-$route->get("/recuperar", "AuthController@forget");
-$route->post("/recuperar", "AuthController@forget");
-$route->get("/recuperar/{code}", "AuthController@reset");
-$route->post("/recuperar/resetar", "AuthController@reset");
+$route->get("/login", "AuthController@login");
+$route->post("/login", "AuthController@login");
+$route->get("/logout", "AuthController@logout");
+$route->get("/forget", "AuthController@forget");
+$route->post("/forget", "AuthController@forget");
+$route->get("/forget/{code}", "AuthController@reset");
+$route->post("/forget/reset", "AuthController@reset");
 
 /**
  * COMPANY ROUTES
@@ -86,7 +86,7 @@ $route->get("/remove/{id}", "UserController@remove");
 $route->group("/publicity");
 $route->get("", "PublicityController@search");
 $route->post("", "PublicityController@search");
-$route->get("/{type}/{search}/{date_start}/{date_final}/{order}/{page}", "PublicityController@search");
+$route->get("/{status}/{type}/{search}/{date_start}/{date_final}/{order}/{page}", "PublicityController@search");
 $route->get("/register", "PublicityController@register");
 $route->get("/view/{id}", "PublicityController@view");
 $route->post("/register", "PublicityController@register");

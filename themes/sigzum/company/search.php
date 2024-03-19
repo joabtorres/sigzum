@@ -147,20 +147,15 @@
         </div>
     </div>
 
-    <!--inicio da paginação-->
-
-
-    <!--fim da paginação-->
-
     <!-- novo-registro -->
-    <?php $this->insert("company\company-register") ?>
+    <?php $this->insert("company/register") ?>
     <!-- fim modal novo-registro-->
 
     <!-- modal para visualizar -->
     <?php
     if (isset($companies) && is_array($companies)) :
         foreach ($companies as $company) :
-            $this->insert("company\company-view", ["company" => $company]);
+            $this->insert("company/view", ["company" => $company]);
         endforeach;
     endif;
     ?>
@@ -169,7 +164,7 @@
     <?php
     if (isset($companies) && is_array($companies)) :
         foreach ($companies as $company) :
-            $this->insert("company\company-remove", ["company" => $company]);
+            $this->insert("company/remove", ["company" => $company]);
         endforeach;
     endif;
     ?>

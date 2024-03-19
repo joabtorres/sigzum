@@ -1,8 +1,9 @@
 <!doctype html>
 <html>
+
 <head>
-    <meta name="viewport" content="width=device-width"/>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title><?= $title; ?></title>
     <style>
         body {
@@ -40,22 +41,24 @@
         }
     </style>
 </head>
+
 <body>
-<table role="presentation" border="0" cellpadding="0" cellspacing="0">
-    <tr>
-        <td>
-            <div class="content">
-                <?= $this->section("content"); ?>
-                <p>Atenciosamente, equipe <?= CONF_SITE_NAME; ?>.</p>
-            </div>
-            <div class="footer">
-                <p><?= CONF_SITE_NAME; ?> - <?= CONF_SITE_TITLE; ?></p>
-                <p><?= CONF_SITE_ADDR_STREET; ?>
-                    , <?= CONF_SITE_ADDR_NUMBER; ?><?= (CONF_SITE_ADDR_COMPLEMENT ? ", " . CONF_SITE_ADDR_COMPLEMENT : ""); ?></p>
-                <p><?= CONF_SITE_ADDR_CITY; ?>/<?= CONF_SITE_ADDR_STATE; ?> - <?= CONF_SITE_ADDR_ZIPCODE; ?></p>
-            </div>
-        </td>
-    </tr>
-</table>
+    <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>
+                <div class="content">
+                    <?= $this->section("content"); ?>
+                    <p>Atenciosamente, equipe <?= CONF_SITE_NAME; ?>.</p>
+                </div>
+                <div class="footer">
+                    <p><?= CONF_SITE_NAME; ?> - <?= CONF_SITE_TITLE; ?></p>
+                    <p><?= CONF_SITE_ADDR_STREET; ?>
+                        , <?= CONF_SITE_ADDR_NUMBER; ?><?= (CONF_SITE_ADDR_COMPLEMENT ? ", " . CONF_SITE_ADDR_COMPLEMENT : ""); ?></p>
+                    <p><?= CONF_SITE_ADDR_CITY; ?>/<?= CONF_SITE_ADDR_STATE; ?> - <?= CONF_SITE_ADDR_ZIPCODE; ?></p>
+                </div>
+            </td>
+        </tr>
+    </table>
 </body>
+
 </html>

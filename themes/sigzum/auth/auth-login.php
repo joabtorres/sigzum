@@ -1,8 +1,8 @@
-<?php $this->layout("auth\_theme", ["head" => $head]); ?>
+<?php $this->layout("auth/_theme", ["head" => $head]); ?>
 
 <section class="offset-lg-1 offset-md-2 col-lg-10 me-auto">
     <h5 class="text-white"><strong>Fazer Login</strong></h5>
-    <form class="auth_form" action="<?= url("/entrar") ?>" method="post" enctype="multipart/form-data">
+    <form class="auth_form" action="<?= url("/login") ?>" method="post" enctype="multipart/form-data">
         <?= csrf_input() ?>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -17,7 +17,7 @@
             <input type="password" name="password" class="form-control" placeholder="Informe a senha" aria-label="Informe a senha" required>
         </div>
         <div>
-            <div class="m-0 text-end text-secondary mt-1 mb-1">Esqueceu a senha? <a href="<?= url("/recuperar") ?>" class="text-white text-decoration-none">Clique aqui</a></div>
+            <div class="m-0 text-end text-secondary mt-1 mb-1">Esqueceu a senha? <a href="<?= url("/forget") ?>" class="text-white text-decoration-none">Clique aqui</a></div>
             <button class="btn btn-primary pe-4 ps-4"><i class="fa-solid fa-right-to-bracket"></i>
                 Entrar</button>
         </div>

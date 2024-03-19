@@ -11,7 +11,7 @@ use Source\Support\Message;
 use Source\Support\Pager;
 
 /**
- * Class CompanyController Controller
+ * Class SectorController Controller
  *
  * @package Source\App
  * @author  Joab T. Alencar <contato@joabtorres.com.br>
@@ -31,7 +31,7 @@ class SectorController extends Controller
         //RESTRIÇÃO
         if (!$this->user = Auth::user()) {
             (new Message())->warning("Efetue login para acessar o sistema.")->flash();
-            redirect("/entrar");
+            redirect("/login");
         }
     }
     /**
@@ -83,7 +83,7 @@ class SectorController extends Controller
             url(),
             theme("/assets/images/share.jpg")
         );
-        echo $this->view->render("sector\search", [
+        echo $this->view->render("sector/search", [
             "head" => $head,
             "sectors" => $sectors->limit($pager->limit())
                 ->offset($pager->offset())
@@ -108,7 +108,6 @@ class SectorController extends Controller
                 echo json_encode($json);
                 return;
             }
-
             $sector = (new Sector())->bootstrap(
                 $data["company"],
                 $data["name"],
@@ -179,13 +178,13 @@ class SectorController extends Controller
      */
     public function remove(array $data): void
     {
-        $sector = (new Sector())->find("id = :id", "id={$data["id"]}")->fetch();
+        $sector = (new Sector())->findById($data["id"]);
         if (!$sector) {
             $this->message->warning("Ooops {$this->user->first_name}! Você tentou excluir um registro inexistente do banco de dados.")->flash();
         } else {
             $sector->destroy();
             $this->message->success("Registro removido com sucesso!")->flash();
         }
-        redirect("publicity");
+        redirect("sector");
     }
 }

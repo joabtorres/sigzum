@@ -29,6 +29,17 @@
                         <article class="card-body">
                             <?= csrf_input() ?>
                             <div class="form-row">
+                                <div class="col-md-3 mb-3">
+                                    <label for='istatus'>Status: *</label><br />
+                                    <select class="custom-select select2-js" name="status" id="istatus" required>
+                                        <?php if (!empty($status)) : ?>
+                                            <?php foreach ($status as $statusItem) : ?>
+                                                <option value="<?= ($statusItem->id ?? "") ?>"><?= ($statusItem->name ?? "") ?></option>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
+                                    </select>
+                                    <div class="invalid-feedback">Informe o status</div>
+                                </div>
                                 <div class="col-md-2 mb-3">
                                     <label for='iSelectBuscar'>Tipo da busca: </label><br />
                                     <select class="custom-select select2-js" name="type" id="iSelectBuscar">
@@ -37,7 +48,7 @@
                                     </select>
                                     <div class="invalid-feedback">Informe o setor</div>
                                 </div>
-                                <div class="col-md-10 mb-3">
+                                <div class="col-md-7 mb-3">
                                     <label for="iCampo">Campo: </label>
                                     <input type="text" class="form-control" name="search" id="iCampo" />
                                     <div class="invalid-feedback">

@@ -28,27 +28,22 @@ class AuthController extends Controller
     }
 
     /**
-     * SITE LOGIN
+     * login function
      *
-     * @param null|array $data
-     *
+     * @param array|null $data
      * @return void
      */
     public function login(?array $data): void
     {
         if (!empty($data['csrf'])) {
             if (!csrf_verify($data)) {
-                $json['message'] = $this->message->error(
-                    "Erro ao enviar, favor use o formulário"
-                )->render();
+                $json['message'] = $this->message->error("Erro ao enviar, favor use o formulário")->render();
                 echo json_encode($json);
                 return;
             }
 
             if (empty($data['email']) || empty($data['password'])) {
-                $json['message'] = $this->message->warning(
-                    "Informe seu e-mail e senha para entrar"
-                )->render();
+                $json['message'] = $this->message->warning("Informe seu e-mail e senha para entrar")->render();
                 echo json_encode($json);
                 return;
             }
@@ -68,7 +63,7 @@ class AuthController extends Controller
         $head = $this->seo->render(
             "Entrar - " . CONF_SITE_NAME,
             CONF_SITE_DESC,
-            url("/entrar"),
+            url("/login"),
             theme("/assets/images/share.jpg")
         );
         echo $this->view->render("auth/auth-login", [
@@ -78,7 +73,8 @@ class AuthController extends Controller
     }
 
     /**
-     * LOGOUT
+     * logout function
+     *
      * @return void
      */
     public function logout()
@@ -88,14 +84,13 @@ class AuthController extends Controller
         )->flash();
 
         Auth::logout();
-        redirect("/entrar");
+        redirect("/login");
     }
 
     /**
-     * FORGET
+     * forget function - recupera senha
      *
-     * @param null|array $data
-     *
+     * @param array|null $data
      * @return void
      */
     public function forget(?array $data): void
@@ -129,7 +124,7 @@ class AuthController extends Controller
         $head = $this->seo->render(
             "Recuperar Senha - " . CONF_SITE_NAME,
             CONF_SITE_DESC,
-            url("/recuperar"),
+            url("/forget"),
             theme("/assets/images/share.jpg")
         );
         echo $this->view->render("auth/auth-forget", [
@@ -138,11 +133,9 @@ class AuthController extends Controller
     }
 
     /**
-     *
-     * SITE RESET
+     * reset function
      *
      * @param array|null $data
-     *
      * @return void
      */
     public function reset(?array $data): void
@@ -176,7 +169,7 @@ class AuthController extends Controller
                 $this->message->success(
                     "Senha alterada com sucesso. Vamos logar?"
                 )->flash();
-                $json['redirect'] = url("/entrar");
+                $json['redirect'] = url("/login");
             } else {
                 $json['message'] = $auth->message()->render();
             }
@@ -187,7 +180,7 @@ class AuthController extends Controller
         $head = $this->seo->render(
             "Crie sua nova senha no " . CONF_SITE_NAME,
             CONF_SITE_DESC,
-            url("/recuperar"),
+            url("/forget"),
             theme("/assets/images/share.jpg")
         );
 
@@ -196,101 +189,4 @@ class AuthController extends Controller
             "code" => $data['code']
         ]);
     }
-
-    /**
-     * SITE REGISTER
-     *
-     * @param null|array $data
-     *
-     * @return void
-     */
-    public function register(?array $data): void
-    {
-        if (!empty($data['csrf'])) {
-            if (!csrf_verify($data)) {
-                $json['message'] = $this->message->error(
-                    "Erro ao enviar, favor use o formulário"
-                )->render();
-                echo json_encode($json);
-                return;
-            }
-
-            if (in_array("", $data)) {
-                $json['message'] = $this->message->info(
-                    "Informe seus dados para criar sua conta."
-                )->render();
-                echo json_encode($json);
-                return;
-            }
-
-            $auth = new Auth();
-            $user = new User();
-            $user->bootstrap(
-                $data["first_name"],
-                $data["last_name"],
-                $data["email"],
-                $data["password"],
-            );
-            if ($auth->register($user)) {
-                $json['redirect'] = url("/confirma");
-            } else {
-                $json['message'] = $auth->message()->render();
-            }
-            echo json_encode($json);
-            return;
-        }
-
-
-        $head = $this->seo->render(
-            "Cadastrar - " . CONF_SITE_NAME,
-            CONF_SITE_DESC,
-            url("/cadastrar"),
-            theme("/assets/images/share.jpg")
-        );
-        echo $this->view->render("auth-register", [
-            "head" => $head
-        ]);
-    }
-
-    /**
-     * SITE CONFIRM
-     *
-     * @return void
-     */
-    public function confirm(): void
-    {
-        $head = $this->seo->render(
-            "Confirme Seu Cadastro - " . CONF_SITE_NAME,
-            CONF_SITE_DESC,
-            url("/confirma"),
-            theme("/assets/images/share.jpg")
-        );
-        echo $this->view->render("optin", [
-            "head" => $head,
-            "data" => (object)[
-                "title" => "Falta pouco! Confirme seu cadastro.",
-                "desc" => "Enviamos um link de confirmação para seu e-mail. Acesse e siga as instruções para concluir seu cadastro e comece a controlar com o CaféControl",
-                "image" => theme("/assets/images/optin-confirm.jpg")
-            ]
-        ]);
-    }
-
-    /**
-     * SITE TERMOS
-     *
-     * @return void
-     */
-    public function terms(): void
-    {
-        $head = $this->seo->render(
-            CONF_SITE_NAME . " - Termos de uso ",
-            CONF_SITE_DESC,
-            url("/termos"),
-            theme("/assets/images/share.jpg")
-        );
-        echo $this->view->render("terms", [
-            "head" => $head
-        ]);
-    }
-
 }

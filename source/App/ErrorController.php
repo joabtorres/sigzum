@@ -24,10 +24,9 @@ class ErrorController extends Controller
     }
 
     /**
-     * SITE ERROR
+     * error function
      *
      * @param array $data
-     *
      * @return void
      */
     public function error(array $data): void

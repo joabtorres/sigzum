@@ -55,7 +55,7 @@ function str_slug(string $string): string
 {
     $string = filter_var(mb_strtolower($string), FILTER_SANITIZE_STRIPPED);
     $formats
-        = 'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜüÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûýýþÿRr"!@#$%&*()_-+={[}]/?;:.,\\\'<>°ºª';
+        = 'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜüÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûýýþÿRr"!@#$%&*()_-+={[}]/?;:.,\\\'<br>°ºª';
     $replace
         = 'aaaaaaaceeeeiiiidnoooooouuuuuybsaaaaaaaceeeeiiiidnoooooouuuyybyRr                                 ';
 
@@ -127,8 +127,8 @@ function str_title(string $string): string
 function str_textarea(string $text): string
 {
     $text = str_replace(array("\r\n", "\r", "\n", PHP_EOL), "<br />", $text);
-    $arrayReplace = ["<br /><br /><br /><br /><br />", "<br /><br /><br /><br />", "<br /><br /><br />", "<br /><br />", "<br />"];
-    return "<p>" . str_replace($arrayReplace, "</p><p>", $text) . "</p>" . PHP_EOL;
+    $arrayReplace = ["<br/><br/><br/><br/><br/>", "<br/><br/><br/><br/>", "<br/><br/><br/>", "<br/><br/>", "<br/>"];
+    return str_replace($arrayReplace, "<br/>", $text);
 }
 
 /**

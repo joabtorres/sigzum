@@ -86,7 +86,7 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="<?= url("/sair") ?>"><i class="fa fa-sign-out-alt"></i> Sair</a>
+                            <a href="<?= url("/logout") ?>"><i class="fa fa-sign-out-alt"></i> Sair</a>
                         </li>
                     </ul>
                 </div>
@@ -122,7 +122,7 @@
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="<?= url("user/update/" . user()->id) ?>"><i class="fas fa-users-cog text-primary"></i> Editar Perfil</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="<?= url("sair") ?>"><i class="fa fa-sign-out-alt text-primary"></i> Sair</a>
+                                    <a class="dropdown-item" href="<?= url("logout") ?>"><i class="fa fa-sign-out-alt text-primary"></i> Sair</a>
                                 </div>
                             </li>
                         </ul>

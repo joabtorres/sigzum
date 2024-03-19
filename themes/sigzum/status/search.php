@@ -7,7 +7,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="<?= url() ?>"><i class="fa fa-tachometer-alt"></i> Inicial</a> </li>
-                    <li class="breadcrumb-item"><a href="<?= url("sector") ?>"><i class="fa-solid fa-swatchbook"></i> Status</a></li>
+                    <li class="breadcrumb-item"><a href="<?= url("status") ?>"><i class="fa-solid fa-swatchbook"></i> Status</a></li>
                 </ol>
             </nav>
         </div>

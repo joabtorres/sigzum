@@ -84,7 +84,17 @@ class Publicity extends Model
             return false;
         }
 
-        if ($this->find("campaign=:name AND date=:date", "name={$this->campaign}&date={$this->date}")) {
+        $publictyId = !empty($this->id) ? $this->id : null;
+        if ($publictyId && ($this->find(
+            "campaign = :name AND date = :date AND id != :id",
+            "name={$this->campaign}&date={$this->date}&id={$publictyId}"
+        )->count())) {
+            $this->message()->info("Está campanha publicitária já está registrada no sistema.");
+            return false;
+        } else if ($this->find(
+            "campaign = :name AND date = :date",
+            "name={$this->campaign}&date={$this->date}"
+        )->count()) {
             $this->message()->info("Está campanha publicitária já está registrada no sistema.");
             return false;
         }
@@ -93,7 +103,7 @@ class Publicity extends Model
         $this->date = "{$year}-{$month}-{$day}";
         if (!empty($this->date_start)) {
             list($day, $month, $year) = explode("/", $this->date_start);
-            $this->date_starts = "{$year}-{$month}-{$day}";
+            $this->date_start = "{$year}-{$month}-{$day}";
         }
         if (!empty($this->date_end)) {
             list($day, $month, $year) = explode("/", $this->date_end);

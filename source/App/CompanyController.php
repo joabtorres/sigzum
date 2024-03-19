@@ -30,7 +30,7 @@ class CompanyController extends Controller
         //RESTRIÇÃO
         if (!$this->user = Auth::user()) {
             (new Message())->warning("Efetue login para acessar o sistema.")->flash();
-            redirect("/entrar");
+            redirect("/login");
         }
     }
 
@@ -48,6 +48,7 @@ class CompanyController extends Controller
         $date_final = !empty($data["date_final"]) ? $data["date_final"] : "end";
         $order = !empty($data["order"]) ? ($data["order"] == "DESC" ? "DESC" : "ASC") : "ASC";
         $page = !empty($data["page"]) ? $data["page"] : 1;
+
         if (!empty($data["csrf"])) {
             if ($date_start != "start") {
                 list($day, $month, $year) = explode("/", $date_start);
@@ -189,7 +190,7 @@ class CompanyController extends Controller
             url(),
             theme("/assets/images/share.jpg")
         );
-        echo $this->view->render("company/company-edit", [
+        echo $this->view->render("company/edit", [
             "head" => $head,
             "company" => $company
         ]);

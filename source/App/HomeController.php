@@ -28,12 +28,11 @@ class HomeController extends Controller
         //RESTRIÇÃO
         if (!$this->user = Auth::user()) {
             (new Message())->warning("Efetue login para acessar o sistema.")->flash();
-            redirect("/entrar");
+            redirect("/login");
         }
     }
     /**
-     * HOME
-     *
+     * home function
      * @return void
      */
     public function home(): void

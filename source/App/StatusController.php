@@ -22,7 +22,7 @@ class StatusController extends Controller
     /** @var User */
     private $user;
     /**
-     * CompanyController construct
+     * StatusController construct
      */
     public function __construct()
     {
@@ -31,7 +31,7 @@ class StatusController extends Controller
         //RESTRIÇÃO
         if (!$this->user = Auth::user()) {
             (new Message())->warning("Efetue login para acessar o sistema.")->flash();
-            redirect("/entrar");
+            redirect("/login");
         }
     }
     /**
@@ -48,6 +48,7 @@ class StatusController extends Controller
         $date_final = !empty($data["date_final"]) ? $data["date_final"] : "end";
         $order = !empty($data["order"]) ? ($data["order"] == "DESC" ? "DESC" : "ASC") : "ASC";
         $page = !empty($data["page"]) ? $data["page"] : 1;
+
         if (!empty($data["csrf"])) {
             if ($date_start != "start") {
                 list($day, $month, $year) = explode("/", $date_start);
