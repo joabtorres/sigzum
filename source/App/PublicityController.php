@@ -238,7 +238,7 @@ class PublicityController extends Controller
      */
     public function remove(array $data): void
     {
-        $publicity = (new Publicity())->find("id = :id", "id={$data["id"]}")->fetch();
+        $publicity = (new Publicity())->findById($data["id"]);
         if (!$publicity) {
             $this->message->warning("Ooops {$this->user->first_name}! Você tentou excluir um registro inexistente do banco de dados.")->flash();
         } else {
