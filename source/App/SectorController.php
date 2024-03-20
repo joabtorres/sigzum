@@ -103,6 +103,7 @@ class SectorController extends Controller
     public function register(array $data): void
     {
         if (!empty($data["csrf"])) {
+            $data = filter_var_array($data, FILTER_SANITIZE_SPECIAL_CHARS);
             if (empty($data["name"])) {
                 $json["message"] = $this->message->error("Informe o nome completo do setor.")->render();
                 echo json_encode($json);
@@ -132,6 +133,7 @@ class SectorController extends Controller
     public function update(array $data): void
     {
         if (!empty($data["csrf"])) {
+            $data = filter_var_array($data, FILTER_SANITIZE_SPECIAL_CHARS);
             if (empty($data["name"])) {
                 $json["message"] = $this->message->error("Informe o nome completo do setor.")->render();
                 echo json_encode($json);
@@ -152,7 +154,7 @@ class SectorController extends Controller
             return;
         }
 
-        $sector = (new Sector())->findById($data["id"]);
+        $sector = (new Sector())->findById(filter_var($data["id"], FILTER_VALIDATE_INT));
         if (!$sector) {
             $this->message->warning("Oops {$this->user->first_name}! Você tentou acessar um registro inexistente no banco de dados.")->flash();
             redirect("sector");
@@ -178,7 +180,7 @@ class SectorController extends Controller
      */
     public function remove(array $data): void
     {
-        $sector = (new Sector())->findById($data["id"]);
+        $sector = (new Sector())->findById(filter_var($data["id"], FILTER_VALIDATE_INT));
         if (!$sector) {
             $this->message->warning("Ooops {$this->user->first_name}! Você tentou excluir um registro inexistente do banco de dados.")->flash();
         } else {

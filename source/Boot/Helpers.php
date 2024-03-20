@@ -311,8 +311,24 @@ function backgroundColorOptions(): array
         ['value' => 'bg-danger', 'label' => 'Vermelho'],
         ['value' => 'bg-light', 'label' => 'Branco'],
         ['value' => 'bg-dark', 'label' => 'Preto'],
+        ['value' => 'bg-warning', 'label' => 'Amarelo'],
         ['value' => 'bg-transparent', 'label' => 'Transparente']
     ];
+}
+/**
+ * count_reg function 
+ *
+ * @param integer $count
+ * @return string '$count registros encontrados / registro encontrado" 
+ */
+function count_reg(int $count): string
+{
+    if ($count > 1) {
+        return "{$count} registros encontrados";
+    } else if ($count == 1) {
+        return "{$count} registro encontrado";
+    }
+    return "0 registro encontrado";
 }
 /**
  * ################
@@ -355,6 +371,22 @@ function date_fmt_br(string $date = "now"): string
 function date_fmt_app(string $date = "now"): string
 {
     return (new DateTime($date))->format(CONF_DATE_APP);
+}
+/**
+ * date_from_days function
+ *
+ * @param string $date
+ * @param string $dateDif
+ * @return string
+ */
+function date_from_days(string $date = "now", string $dateDif = "now"): string
+{
+    $date_start = new DateTime($date);
+    $date_final = new DateTime($dateDif);
+
+    $dateInterval = $date_start->diff($date_final);
+
+    return "{$dateInterval->days} dias";
 }
 
 /**

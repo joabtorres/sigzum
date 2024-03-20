@@ -358,7 +358,7 @@ abstract class Model
      *
      * @return bool
      */
-    public function delete(string $terms, ?string $params): bool
+    public function delete(string $terms, ?string $params = null): bool
     {
         try {
             $stmt = Connect::getInstance()->prepare("DELETE FROM  " . static::$entity . " WHERE {$terms}");
@@ -384,7 +384,7 @@ abstract class Model
         if (empty($this->id)) {
             return false;
         }
-        $destroy = $this->delete("id = :id", "id={$this->id}");
+        $destroy = $this->delete("id=:id", "id={$this->id}");
         return true;
     }
 

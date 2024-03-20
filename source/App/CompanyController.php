@@ -103,6 +103,7 @@ class CompanyController extends Controller
     public function register(array $data): void
     {
         if (!empty($data["csrf"])) {
+            $data = filter_var_array($data, FILTER_SANITIZE_SPECIAL_CHARS);
             if (empty($data["full_name"])) {
                 $json["message"] = $this->message->error("Informe o nome completo da empresa.")->render();
                 echo json_encode($json);
@@ -145,6 +146,7 @@ class CompanyController extends Controller
     public function update(array $data): void
     {
         if (!empty($data["csrf"])) {
+            $data = filter_var_array($data, FILTER_SANITIZE_SPECIAL_CHARS);
             if (empty($data["full_name"])) {
                 $json["message"] = $this->message->error("Informe o nome completo da empresa.")->render();
                 echo json_encode($json);
@@ -161,7 +163,7 @@ class CompanyController extends Controller
                 return;
             }
 
-            $company = (new Company())->findById($data["company"]);
+            $company = (new Company())->findById(filter_var($data["company"], FILTER_VALIDATE_INT));
             $company->full_name = $data["full_name"];
             $company->address = $data["address"];
             $company->cnpj = $data["cnpj"];
@@ -178,7 +180,7 @@ class CompanyController extends Controller
             return;
         }
 
-        $company = (new Company())->findById($data["company"]);
+        $company = (new Company())->findById(filter_var($data["company"], FILTER_VALIDATE_INT));
         if (!$company) {
             $this->message->warning("Oops {$this->user->first_name}! Você tentou acessar um registro inexistente no banco de dados.")->flash();
             redirect("company");
@@ -203,7 +205,7 @@ class CompanyController extends Controller
      */
     public function remove(array $data): void
     {
-        $company = (new Company())->find("id = :company", "company={$data["company"]}")->fetch();
+        $company = (new Company())->findById(filter_var($data["company"], FILTER_VALIDATE_INT));
         if (!$company) {
             $this->message->warning("Ooops {$this->user->first_name}! Você tentou excluir um registro inexistente do banco de dados.")->flash();
         } else {

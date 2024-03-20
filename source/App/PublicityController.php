@@ -76,8 +76,8 @@ class PublicityController extends Controller
             return;
         }
 
-        $sql_query = ":date < date";
-        $sql_params = "date=" . date_fmt("now", "Y-m-d");
+        $sql_query = "id >= :id";
+        $sql_params = "id=1";
         if ($status != "status") {
             $sql_query .= " AND status_id=:status";
             $sql_params .= "&status={$status}";
@@ -104,7 +104,7 @@ class PublicityController extends Controller
             "head" => $head,
             "publicities" => $publicity->limit($pager->limit())
                 ->offset($pager->offset())
-                ->order("date {$order}")
+                ->order("id {$order}")
                 ->fetch(true),
             "publicityTotal" => $publicity->count(),
             "paginator" => $pager->render(),
@@ -120,15 +120,15 @@ class PublicityController extends Controller
     public function register(array $data): void
     {
         if (!empty($data["csrf"])) {
-
+            $data = filter_var_array($data, FILTER_SANITIZE_SPECIAL_CHARS);
             $publicity = (new Publicity())->bootstrap(
                 $data["status_id"],
                 $this->user->id,
                 $data["campaign"],
                 $data["date"],
                 $data["description"],
-                $data["date_start"],
-                $data["date_end"]
+                !empty($data["date_start"]) ? $data["date_start"] : "",
+                !empty($data["date_end"]) ? $data["date_end"] : ""
             );
 
             if (!$publicity->save()) {
@@ -162,7 +162,7 @@ class PublicityController extends Controller
     public function update(array $data): void
     {
         if (!empty($data["csrf"])) {
-
+            $data = filter_var_array($data, FILTER_SANITIZE_SPECIAL_CHARS);
             $publicity = (new Publicity())->findById($data["id"]);
             $publicity->campaign = $data["campaign"];
             $publicity->date = $data["date"];
@@ -182,7 +182,7 @@ class PublicityController extends Controller
             return;
         }
 
-        $publicity = (new Publicity())->findById($data["id"]);
+        $publicity = (new Publicity())->findById(filter_var($data["id"], FILTER_VALIDATE_INT));
         if (!$publicity) {
             $this->message->warning("Oops {$this->user->first_name}! Você tentou acessar um registro inexistente no banco de dados.")->flash();
             redirect("publicity");
@@ -210,7 +210,7 @@ class PublicityController extends Controller
      */
     public function view(array $data): void
     {
-        $publicity = (new Publicity())->findById($data["id"]);
+        $publicity = (new Publicity())->findById(filter_var($data["id"], FILTER_VALIDATE_INT));
         if (!$publicity) {
             $this->message->error("Ooops {$this->user->first_name}! Você tentou acessa um registro inexistente!")->flash();
             redirect(url_back());
@@ -238,17 +238,19 @@ class PublicityController extends Controller
      */
     public function remove(array $data): void
     {
-        $publicity = (new Publicity())->findById($data["id"]);
+        $publicity = (new Publicity())->findById(filter_var($data["id"], FILTER_VALIDATE_INT));
         if (!$publicity) {
             $this->message->warning("Ooops {$this->user->first_name}! Você tentou excluir um registro inexistente do banco de dados.")->flash();
         } else {
-            $anexo = (new Anexo)->find("publicity_id=:publicity", "publicity={$publicity->id}");
+            $anexo = (new Anexo())->find("publicity_id=:publicity", "publicity={$publicity->id}")->fetch(true);
             if (!empty($anexo)) {
+                $upload = new Upload();
                 foreach ($anexo as $anexoItem) {
-                    (new Upload())->remove(CONF_UPLOAD_DIR . "/{$anexoItem->url}");
+                    $upload->remove(CONF_UPLOAD_DIR . "/{$anexoItem->url}");
                 }
-                $anexo->delete("publicity_id=:publicity", "publicity={$publicity->id}");
+                (new Anexo())->delete("publicity_id = :publicity", "publicity={$publicity->id}");
             }
+            $publicity = (new Publicity())->findById(filter_var($data["id"], FILTER_VALIDATE_INT));
             $publicity->destroy();
             $this->message->success("Registro removido com sucesso!")->flash();
         }
@@ -263,7 +265,7 @@ class PublicityController extends Controller
     public function registerAnexo(array $data): void
     {
         if (!empty($data["csrf"])) {
-
+            $data = filter_var_array($data, FILTER_SANITIZE_SPECIAL_CHARS);
             if (!$data["description"]) {
                 $json["message"] = $this->message->warning("Informe uma descrição")->render();
                 echo json_encode($json);
@@ -308,7 +310,7 @@ class PublicityController extends Controller
      */
     public function removeAnexo(array $data): void
     {
-        $anexo = (new Anexo())->findById($data["id"]);
+        $anexo = (new Anexo())->findById(filter_var($data["id"], FILTER_VALIDATE_INT));
         $publicity = $anexo->publicity_id;
         if (!$anexo) {
             $this->message->warning("Ooops {$this->user->first_name}! Você tentou excluir um registro inexistente do banco de dados.")->flash();

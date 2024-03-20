@@ -5,6 +5,9 @@ namespace Source\App;
 use Source\Core\Connect;
 use Source\Core\Controller;
 use Source\Models\Auth;
+use Source\Models\Publicity;
+use Source\Models\Status;
+use Source\Models\User;
 use Source\Support\Message;
 
 /**
@@ -44,7 +47,11 @@ class HomeController extends Controller
             theme("/assets/images/share.jpg")
         );
         echo $this->view->render("home", [
-            "head" => $head
+            "head" => $head,
+            "usersCount" => (new User())->find()->count(),
+            "publicitiesCount" => (new Publicity())->find()->count(),
+            "statusCount" => (new Status())->find()->count(),
+            "publicities" => (new Publicity())->find("date > :date", "date=" . date_fmt("now", "Y-m-d"))->order("date ASC")->fetch(true)
         ]);
     }
 }

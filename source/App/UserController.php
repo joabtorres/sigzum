@@ -104,6 +104,7 @@ class UserController extends Controller
     public function register(array $data): void
     {
         if (!empty($data["csrf"])) {
+            $data = filter_var_array($data, FILTER_SANITIZE_SPECIAL_CHARS);
             if (!empty($data["password"]) && empty($data["rpassword"])) {
                 $json["message"] = $this->message->warning("Informe o 'Repetir Senha' corretamente!")->render();
                 echo json_encode($json);
@@ -155,6 +156,7 @@ class UserController extends Controller
     public function update(array $data): void
     {
         if (!empty($data["csrf"])) {
+            $data = filter_var_array($data, FILTER_SANITIZE_SPECIAL_CHARS);
             if (!empty($data["password"]) && empty($data["rpassword"])) {
                 $json["message"] = $this->message->warning("Informe o 'Repetir Senha' corretamente!")->render();
                 echo json_encode($json);
@@ -166,7 +168,7 @@ class UserController extends Controller
                 return;
             }
 
-            $user = (new User())->findById($data["id"]);
+            $user = (new User())->findById(filter_var($data["id"], FILTER_VALIDATE_INT));
             $user->sector_id = $data["sector_id"];
             $user->first_name = $data["first_name"];
             $user->last_name = $data["last_name"];
@@ -185,7 +187,7 @@ class UserController extends Controller
             return;
         }
 
-        $user = (new User())->findById($data["id"]);
+        $user = (new User())->findById(filter_var($data["id"], FILTER_VALIDATE_INT));
         $head = $this->seo->render(
             "Editar usuário - " . CONF_SITE_TITLE,
             CONF_SITE_DESC,
@@ -207,7 +209,7 @@ class UserController extends Controller
      */
     public function remove(array $data): void
     {
-        $user = (new User())->find("id = :id", "id={$data["id"]}")->fetch();
+        $user = (new User())->findById(filter_var($data, FILTER_VALIDATE_INT));
         if (!$user) {
             $this->message->warning("Ooops {$this->user->first_name}! Você tentou excluir um registro inexistente do banco de dados.")->flash();
         } else {
