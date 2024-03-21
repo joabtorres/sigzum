@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 16/03/2024 às 16:02
+-- Tempo de geração: 20/03/2024 às 19:42
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -20,22 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `sigzum_db`
 --
-
--- --------------------------------------------------------
-
---
--- Estrutura para tabela `anexos`
---
-
-CREATE TABLE `anexos` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `publicity_id` int(10) UNSIGNED NOT NULL,
-  `user_id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `url` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -71,7 +55,7 @@ CREATE TABLE `publicities` (
   `id` int(10) UNSIGNED NOT NULL,
   `status_id` int(10) UNSIGNED NOT NULL,
   `user_id` int(10) UNSIGNED NOT NULL,
-  `company` varchar(255) DEFAULT NULL,
+  `campaign` varchar(255) DEFAULT NULL,
   `date` date DEFAULT NULL,
   `description` text DEFAULT NULL,
   `date_start` date DEFAULT NULL,
@@ -84,20 +68,34 @@ CREATE TABLE `publicities` (
 -- Despejando dados para a tabela `publicities`
 --
 
-INSERT INTO `publicities` (`id`, `status_id`, `user_id`, `company`, `date`, `description`, `date_start`, `date_end`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 'Dia das Mães', '2024-05-12', 'Dia das Mães é comemorado no segundo domingo de maio, celebrado em diferentes países, é uma homenagem à maternidade e ao amor materno. É comemorado no segundo domingo de maio, sendo uma oportunidade para reconhecer e valorizar o papel das mães na vida das pessoas.', NULL, NULL, '2024-03-13 18:12:20', '2024-03-13 18:12:42'),
-(2, 1, 1, 'Tiradentes ', '2024-04-21', NULL, NULL, NULL, '2024-03-13 18:14:11', NULL),
-(3, 1, 1, 'Dia do Trabalho', '2024-05-01', 'O Dia do Trabalhador, em 1º de maio, é uma celebração global dos trabalhadores e suas conquistas históricas.', NULL, NULL, '2024-03-13 18:14:39', '2024-03-13 18:39:23'),
+INSERT INTO `publicities` (`id`, `status_id`, `user_id`, `campaign`, `date`, `description`, `date_start`, `date_end`, `created_at`, `updated_at`) VALUES
+(1, 8, 1, 'Dia das Mães', '2024-05-12', 'Dia das Mães é comemorado no segundo domingo de maio, celebrado em diferentes países, é uma homenagem à maternidade e ao amor materno. É comemorado no segundo domingo de maio, sendo uma oportunidade para reconhecer e valorizar o papel das mães na vida das pessoas.<br />-----<br /><br />SORTEIO DO DIA DAS MÃES PREMIACÃO ( INDIVIDUAL) <br />- HIDRATAÇÃO E ESCOVA<br />- BOTOX E ESCOVA <br />- SOBRANCELHA LIMPEZA DE PELE<br /> ( Inst. Rosa Barreto) <br />- CESTA DE PRODUTOS DA OBOTICARIO <br />REQUESITOS: PAGAMENTO EM DIA SE CADASTRA NA ZUM ONLINE', '2024-03-15', '2024-05-15', '2024-03-13 18:12:20', '2024-03-19 20:12:08'),
+(3, 1, 1, 'Dia do Trabalho', '2024-05-01', 'O Dia do Trabalhador, em 1º de maio, é uma celebração global dos trabalhadores e suas conquistas históricas.', NULL, NULL, '2024-03-13 18:14:39', '2024-03-19 14:13:09'),
 (4, 1, 1, 'Dia dos Namorados', '2024-06-12', NULL, NULL, NULL, '2024-03-13 18:15:20', NULL),
-(5, 1, 1, 'Dia dos Pais', '2024-08-09', NULL, NULL, NULL, '2024-03-13 18:15:58', '2024-03-13 18:16:34'),
-(6, 1, 1, 'Independência do Brasil', '2024-09-07', NULL, NULL, NULL, '2024-03-13 18:17:15', NULL),
+(5, 1, 1, 'Dia dos Pais', '2024-08-09', 'O Dia dos Pais é uma data comemorativa em que se homenageia a figura paterna. No Brasil, é celebrado no segundo domingo de agosto, sendo uma ocasião para os filhos expressarem seu amor, gratidão e reconhecimento pelos pais e pelas figuras paternas em suas vidas.<br /><br />---<br />', NULL, NULL, '2024-03-13 18:15:58', '2024-03-19 14:21:37'),
 (7, 1, 1, 'Dia das Crianças', '2024-10-12', NULL, NULL, NULL, '2024-03-13 18:18:26', NULL),
 (8, 1, 1, 'Nossa Senhora Aparecida', '2024-10-12', NULL, NULL, NULL, '2024-03-13 18:18:53', NULL),
 (9, 1, 1, 'Proclamação da República', '2024-11-15', NULL, NULL, NULL, '2024-03-13 18:19:33', '2024-03-13 18:19:57'),
-(10, 1, 1, 'Natal ', '2024-03-13', '\r\nO Natal é uma celebração cristã que comemora o nascimento de Jesus Cristo em 25 de dezembro. É marcado por tradições como troca de presentes, decorações, reuniões familiares e celebrações religiosas. É uma época de generosidade e paz, amplamente celebrada globalmente.', NULL, NULL, '2024-03-13 18:20:19', '2024-03-13 18:37:24'),
+(10, 1, 1, 'Natal ', '2024-12-25', 'O Natal é uma celebração cristã que comemora o nascimento de Jesus Cristo em 25 de dezembro. É marcado por tradições como troca de presentes, decorações, reuniões familiares e celebrações religiosas. É uma época de generosidade e paz, amplamente celebrada globalmente.', NULL, NULL, '2024-03-13 18:20:19', '2024-03-19 15:03:07'),
 (11, 1, 1, 'Ano Novo', '2025-01-01', NULL, NULL, NULL, '2024-03-13 18:20:40', NULL),
 (12, 1, 1, 'Dia da Amazônia', '2024-09-05', NULL, NULL, NULL, '2024-03-13 18:26:58', '2024-03-13 18:27:09'),
-(13, 1, 1, 'Páscoa', '2024-04-13', 'A Páscoa é uma festividade cristã que celebra a ressurreição de Jesus Cristo. Ela é comemorada em diferentes datas, variando de acordo com o calendário lunar, mas geralmente ocorre entre março e abril. A Páscoa é marcada por várias tradições, incluindo serviços religiosos especiais, como vigílias e missas, além de símbolos como ovos coloridos, coelhos e cordeiros. Para muitas pessoas, a Páscoa é um momento de reflexão espiritual, renovação da fé e reunião familiar.', NULL, NULL, '2024-03-13 18:31:59', '2024-03-13 18:38:12');
+(13, 1, 1, 'Páscoa', '2024-04-13', 'A Páscoa é uma festividade cristã que celebra a ressurreição de Jesus Cristo. Ela é comemorada em diferentes datas, variando de acordo com o calendário lunar, mas geralmente ocorre entre março e abril. A Páscoa é marcada por várias tradições, incluindo serviços religiosos especiais, como vigílias e missas, além de símbolos como ovos coloridos, coelhos e cordeiros. Para muitas pessoas, a Páscoa é um momento de reflexão espiritual, renovação da fé e reunião familiar.', NULL, NULL, '2024-03-13 18:31:59', '2024-03-20 13:21:51');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `publicities_anexos`
+--
+
+CREATE TABLE `publicities_anexos` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `publicity_id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -145,9 +143,10 @@ CREATE TABLE `status` (
 
 INSERT INTO `status` (`id`, `name`, `class_color`, `company_id`, `created_at`, `updated_at`) VALUES
 (1, 'Aguardando', 'bg-primary', 1, '2024-03-13 18:09:01', '2024-03-15 13:26:49'),
-(2, 'Finalizado', 'bg-danger', 1, '2024-03-13 18:09:10', '2024-03-15 14:20:44'),
+(2, 'Finalizado', 'bg-dark', 1, '2024-03-13 18:09:10', '2024-03-19 14:21:23'),
 (3, 'Publicado', 'bg-success', 1, '2024-03-13 18:09:19', '2024-03-15 13:24:27'),
-(4, 'Cancelado', 'bg-danger', 1, '2024-03-13 18:09:30', '2024-03-15 13:24:32');
+(4, 'Cancelado', 'bg-danger', 1, '2024-03-13 18:09:30', '2024-03-15 13:24:32'),
+(8, 'Em andamento', 'bg-warning', 1, '2024-03-19 20:11:46', '2024-03-20 18:27:54');
 
 -- --------------------------------------------------------
 
@@ -173,20 +172,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `sector_id`, `first_name`, `last_name`, `email`, `password`, `avatar`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Joab', 'T. Alencar', 'joabtorres1508@gmail.com', '$2y$10$wCAWmc1dBWeDKdzSjl.2weGoRU6mfI728/YqSE/3pGSWpjGeH9KAy', NULL, 1, '2024-03-13 18:03:58', '2024-03-13 19:40:05'),
-(12, 2, 'Joab', 'Técnico', 'bugados01@gmail.com', '$2y$10$7lV1hg6ybaEkj1HB4/LUNOApNpbfw1.OxTu.04IvPKlP21SsG3zMC', NULL, 1, '2024-03-15 20:18:45', '2024-03-16 11:51:38');
+(1, 1, 'Joab', 'T. Alencar', 'joabtorres1508@gmail.com', '$2y$10$wCAWmc1dBWeDKdzSjl.2weGoRU6mfI728/YqSE/3pGSWpjGeH9KAy', NULL, 1, '2024-03-13 18:03:58', '2024-03-13 19:40:05');
 
 --
 -- Índices para tabelas despejadas
 --
-
---
--- Índices de tabela `anexos`
---
-ALTER TABLE `anexos`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_docs_anexos_users1_idx` (`user_id`),
-  ADD KEY `fk_anexos_publicities1_idx` (`publicity_id`);
 
 --
 -- Índices de tabela `companies`
@@ -201,6 +191,14 @@ ALTER TABLE `publicities`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_docs_users1_idx` (`user_id`),
   ADD KEY `fk_publicities_status1_idx` (`status_id`);
+
+--
+-- Índices de tabela `publicities_anexos`
+--
+ALTER TABLE `publicities_anexos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_docs_anexos_users1_idx` (`user_id`),
+  ADD KEY `fk_anexos_publicities1_idx` (`publicity_id`);
 
 --
 -- Índices de tabela `sectors`
@@ -229,12 +227,6 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT de tabela `anexos`
---
-ALTER TABLE `anexos`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de tabela `companies`
 --
 ALTER TABLE `companies`
@@ -244,7 +236,13 @@ ALTER TABLE `companies`
 -- AUTO_INCREMENT de tabela `publicities`
 --
 ALTER TABLE `publicities`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT de tabela `publicities_anexos`
+--
+ALTER TABLE `publicities_anexos`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de tabela `sectors`
@@ -256,7 +254,7 @@ ALTER TABLE `sectors`
 -- AUTO_INCREMENT de tabela `status`
 --
 ALTER TABLE `status`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de tabela `users`
@@ -269,18 +267,18 @@ ALTER TABLE `users`
 --
 
 --
--- Restrições para tabelas `anexos`
---
-ALTER TABLE `anexos`
-  ADD CONSTRAINT `fk_anexos_publicities1` FOREIGN KEY (`publicity_id`) REFERENCES `publicities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_docs_anexos_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Restrições para tabelas `publicities`
 --
 ALTER TABLE `publicities`
   ADD CONSTRAINT `fk_docs_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_publicities_status1` FOREIGN KEY (`status_id`) REFERENCES `status` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Restrições para tabelas `publicities_anexos`
+--
+ALTER TABLE `publicities_anexos`
+  ADD CONSTRAINT `fk_anexos_publicities1` FOREIGN KEY (`publicity_id`) REFERENCES `publicities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_docs_anexos_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Restrições para tabelas `sectors`

@@ -4,7 +4,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col" id="pagina-header">
-            <h5>Setor: <?= ($status->name ?? "") ?></h5>
+            <h5>Status: <?= ($status->name ?? "") ?></h5>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="<?= url() ?>"><i class="fa fa-tachometer-alt"></i> Inicial</a>
@@ -48,7 +48,7 @@
                             <div class="col-md-12 mb-3">
                                 <label for='icor'>Cores: </label><br />
                                 <select class="custom-select select2-js" name="class_color" id="icor">
-                                    <?php foreach (backgroundColorOptions() as $bgColor) :  ?>
+                                    <?php foreach (bgcolor_options() as $bgColor) :  ?>
                                         <?php if ($status->class_color == $bgColor["value"]) : ?>
                                             <option value="<?= ($bgColor["value"] ?? "") ?>" selected="true"><?= ($bgColor["label"] ?? "") ?></option>
                                         <?php else : ?>

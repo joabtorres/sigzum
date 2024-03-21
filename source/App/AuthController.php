@@ -5,7 +5,6 @@ namespace Source\App;
 use Source\Core\Connect;
 use Source\Core\Controller;
 use Source\Models\Auth;
-use Source\Models\User;
 use Source\Support\Message;
 
 /**

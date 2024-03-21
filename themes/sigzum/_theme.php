@@ -51,10 +51,6 @@
                                     <a href="<?= url('publicity') ?>"><i class="fas fa-tasks"></i> Campanhas
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="<?= url('publicity/graphic') ?>"><i class="fa-solid fa-chart-column"></i> Gráfico de
-                                        Campanhas</a>
-                                </li>
                             </ul>
                         </li>
                         <li>
