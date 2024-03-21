@@ -1,6 +1,8 @@
 <?php $this->layout("auth/_theme", ["head" => $head]); ?>
-
-<section class="offset-lg-1 offset-md-2 col-lg-10 me-auto">
+<div class="d-md-none">
+    <img src="<?= theme("assets/image/logo-login-white.png") ?>" class="mx-auto d-block img-fluid mt-2 mb-3">
+</div>
+<section class="offset-lg-1 col-md-12 col-lg-10 me-auto">
     <h5 class="text-white"><strong>Fazer Login</strong></h5>
     <form class="auth_form" action="<?= url("/login") ?>" method="post" enctype="multipart/form-data">
         <?= csrf_input() ?>

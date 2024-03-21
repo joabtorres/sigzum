@@ -34,7 +34,7 @@ class Auth extends Model
         if (!$session->has("authUser")) {
             return null;
         }
-        return (new User())->findById($session->authUser);
+        return (new User())->find("status=1 && id=:id", "id={$session->authUser}")->fetch();
     }
 
     /**
@@ -110,7 +110,7 @@ class Auth extends Model
             return false;
         }
         if (!$user->status) {
-            $this->message->error("O acesso deste usuário foi revogado.");
+            $this->message->error("Seu acesso foi revogado, entre em contato com administradores do sistema.");
             return false;
         }
 

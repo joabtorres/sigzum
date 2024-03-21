@@ -32,6 +32,7 @@ class CompanyController extends Controller
             (new Message())->warning("Efetue login para acessar o sistema.")->flash();
             redirect("/login");
         }
+        user_level(2);
     }
 
     /**

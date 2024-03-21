@@ -293,7 +293,7 @@ function user_level(int $require): void
 {
     if (user()->level < $require) {
         message()->warning("Oops, " . user()->first_name . "! Parece que você não possui o nível de acesso necessário para realizar essa ação.")->flash();
-        redirect(url());
+        redirect("/");
     }
 }
 

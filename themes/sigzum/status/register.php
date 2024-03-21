@@ -10,7 +10,7 @@
             <article class="modal-body">
                 <form method="post" class="needs-validation" novalidate enctype="multipart/form-data" action="<?= url("status/register") ?>">
                     <?= csrf_input() ?>
-                    <div class="ajax_response"><?= flash() ?></div>
+                    <div class="ajax_response"></div>
                     <div class="form-row">
                         <div class="col-md-12 mb-3">
                             <label for='icompany'>Empresa: </label><br />

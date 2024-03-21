@@ -127,10 +127,9 @@ class PublicityController extends Controller
                 $data["campaign"],
                 $data["date"],
                 $data["description"],
-                !empty($data["date_start"]) ? $data["date_start"] : "",
-                !empty($data["date_end"]) ? $data["date_end"] : ""
+                !empty($data["date_start"]) ? $data["date_start"] : null,
+                !empty($data["date_end"]) ? $data["date_end"] : null
             );
-
             if (!$publicity->save()) {
                 $json['message'] = $publicity->message()->render();
                 echo json_encode($json);

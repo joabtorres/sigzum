@@ -1,27 +1,32 @@
 html,
 body,
 * {
-    font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
 }
 
 :root {
-    --bg-strong: #151b4d;
-    --bg-primary: #2c3892;
-    --bg-white: #fff;
+  --bg-strong: #151b4d;
+  --bg-primary: #2c3892;
+  --bg-white: #fff;
 }
 
 .bg-strong {
-    background-color: var(--bg-strong);
+  background-color: var(--bg-strong);
 }
-
 
 #content-logo,
 #content-login {
-    height: 100vh;
+  height: 100vh;
 }
 
 #content-login {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+@media (max-width: 600px) {
+  #content-logo {
+    display: none;
+  }
 }

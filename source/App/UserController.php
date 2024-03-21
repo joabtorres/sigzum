@@ -116,13 +116,20 @@ class UserController extends Controller
                 return;
             }
 
+            if (empty($data["sector_id"])) {
+                $json["message"] = $this->message->warning("Por favor, Informe o setor do novo usuário")->render();
+                echo json_encode($json);
+                return;
+            }
+
             $user = (new User())->bootstrap(
                 $data["first_name"],
                 $data["last_name"],
                 $data["email"],
                 $data["password"],
                 $data["sector_id"],
-                $data["status"]
+                !empty($data["status"]) ? filter_var($data["status"], FILTER_VALIDATE_INT) : 0,
+                !empty($data["level"]) ? filter_var($data["level"], FILTER_VALIDATE_INT) : 1
             );
             if (!$user->save()) {
                 $json["message"] = $user->message()->render();
@@ -155,6 +162,12 @@ class UserController extends Controller
      */
     public function update(array $data): void
     {
+        $data["id"] = filter_var($data["id"], FILTER_VALIDATE_INT);
+        if ($data["id"] != $this->user->id || $this->user->level >= 2) {
+            user_level(2);
+        }
+
+
         if (!empty($data["csrf"])) {
             $data = filter_var_array($data, FILTER_SANITIZE_SPECIAL_CHARS);
             if (!empty($data["password"]) && empty($data["rpassword"])) {
@@ -169,12 +182,19 @@ class UserController extends Controller
             }
 
             $user = (new User())->findById(filter_var($data["id"], FILTER_VALIDATE_INT));
-            $user->sector_id = $data["sector_id"];
             $user->first_name = $data["first_name"];
             $user->last_name = $data["last_name"];
             $user->email = $data["email"];
             $user->password = !empty($data["password"]) ? $data["password"] : $user->password;
-            $user->status = $data["status"];
+            if (isset($data["sector_id"])) {
+                $user->sector_id = $data["sector_id"];
+            }
+            if (isset($data["status"])) {
+                $user->level =  !empty($data["status"]) ? filter_var($data["status"], FILTER_VALIDATE_INT) : 0;
+            }
+            if (isset($data["level"])) {
+                $user->status = !empty($data["level"]) ? filter_var($data["level"], FILTER_VALIDATE_INT) : 1;
+            }
 
             if (!$user->save()) {
                 $json["message"] = $user->message()->render();
