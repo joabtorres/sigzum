@@ -35,7 +35,7 @@ class AuthController extends Controller
     public function login(?array $data): void
     {
         if (!empty($data['csrf'])) {
-            if (!csrf_verify($data)) {
+            if (!csrf_verify($data['csrf'])) {
                 $json['message'] = $this->message->error("Erro ao enviar, favor use o formulário")->render();
                 echo json_encode($json);
                 return;
@@ -95,7 +95,7 @@ class AuthController extends Controller
     public function forget(?array $data): void
     {
         if (!empty($data['csrf'])) {
-            if (!csrf_verify($data)) {
+            if (!csrf_verify($data['csrf'])) {
                 $json['message'] = $this->message->error(
                     "Erro ao enviar, favor use o formulário"
                 )->render();
@@ -140,7 +140,7 @@ class AuthController extends Controller
     public function reset(?array $data): void
     {
         if (!empty($data['csrf'])) {
-            if (!csrf_verify($data)) {
+            if (!csrf_verify($data['csrf'])) {
                 $json['message'] = $this->message->error(
                     "Erro ao enviar, favor use o formulário"
                 )->render();

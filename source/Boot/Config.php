@@ -21,7 +21,7 @@ define("CONF_URL_ADMIN", "/admin");
 define("CONF_SITE_NAME", "SIGZUM");
 define("CONF_SITE_VERSION", "1.0");
 define("CONF_SITE_TITLE", "Gerencie seus documentos de forma simples e fácil");
-define("CONF_SITE_DESC", "A Aplicação é responsável por criar, organizar e gerenciar tipos de documentos como memorando, ofícios e etc em ordem númerica crescente.");
+define("CONF_SITE_DESC", "A Aplicação é responsável por criar, organizar e gerenciar atividades internas da gestão da empresa, sendo necessário adicionar novos modulos de acordo com a necessidade.");
 define("CONF_SITE_LANG", "pt_BR");
 define("CONF_SITE_DOMAIN", "sigzum.zumtelecom.com.br");
 define("CONF_SITE_ADDR_STREET", "Tv. Vítor Campos");

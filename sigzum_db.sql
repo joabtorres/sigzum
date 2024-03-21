@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 20/03/2024 às 19:42
+-- Tempo de geração: 21/03/2024 às 14:21
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -20,6 +20,22 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `sigzum_db`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `anexos`
+--
+
+CREATE TABLE `anexos` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `publicity_id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -162,6 +178,7 @@ CREATE TABLE `users` (
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `avatar` varchar(255) DEFAULT NULL,
+  `level` int(11) DEFAULT 1,
   `status` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
@@ -171,8 +188,8 @@ CREATE TABLE `users` (
 -- Despejando dados para a tabela `users`
 --
 
-INSERT INTO `users` (`id`, `sector_id`, `first_name`, `last_name`, `email`, `password`, `avatar`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Joab', 'T. Alencar', 'joabtorres1508@gmail.com', '$2y$10$wCAWmc1dBWeDKdzSjl.2weGoRU6mfI728/YqSE/3pGSWpjGeH9KAy', NULL, 1, '2024-03-13 18:03:58', '2024-03-13 19:40:05');
+INSERT INTO `users` (`id`, `sector_id`, `first_name`, `last_name`, `email`, `password`, `avatar`, `level`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Joab', 'T. Alencar', 'joabtorres1508@gmail.com', '$2y$10$wCAWmc1dBWeDKdzSjl.2weGoRU6mfI728/YqSE/3pGSWpjGeH9KAy', NULL, 1, 1, '2024-03-13 18:03:58', '2024-03-13 19:40:05');
 
 --
 -- Índices para tabelas despejadas
