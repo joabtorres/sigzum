@@ -60,7 +60,7 @@
                             <div class="col-md-6">
                                 <div class="form-row">
                                     <?php
-                                    if (user()->level > 3) : ?>
+                                    if (user()->level > 1) : ?>
                                         <div class="col-md-12 mb-3">
                                             <label for='icompany'>Setor: *</label><br />
                                             <select class="custom-select select2-js" name="sector_id" id="icompany" required>
@@ -84,13 +84,13 @@
                                                 $levels = list_user_level();
                                                 if (!empty($levels)) : ?>
                                                     <?php foreach ($levels as $item) : ?>
-                                                        <?php if ($user->level == $item["value"]) : ?>s
-                                                        <option value="<?= ($item["value"] ?? "") ?>"><?= ($item["label"] ?? "") ?></option>
-                                                    <?php else : ?>
-                                                        <option value="<?= ($item["value"] ?? "") ?>"><?= ($item["label"] ?? "") ?></option>
-                                                    <?php endif; ?>
-                                                <?php endforeach; ?>
-                                            <?php endif; ?>
+                                                        <?php if ($user->level == $item["value"]) : ?>
+                                                            <option value="<?= ($item["value"] ?? "") ?>" selected><?= ($item["label"] ?? "") ?></option>
+                                                        <?php else : ?>
+                                                            <option value="<?= ($item["value"] ?? "") ?>"><?= ($item["label"] ?? "") ?></option>
+                                                        <?php endif; ?>
+                                                    <?php endforeach; ?>
+                                                <?php endif; ?>
                                             </select>
                                             <div class="invalid-feedback">Informe o nível de acesso</div>
                                         </div>
@@ -105,8 +105,8 @@
                                                 ];
                                                 if (!empty($access)) : ?>
                                                     <?php foreach ($access as $item) : ?>
-                                                        <?php if ($user->status == $item["value"]) : ?>s
-                                                        <option value="<?= ($item["value"] ?? "") ?>"><?= ($item["label"] ?? "") ?></option>
+                                                        <?php if ($user->status == $item["value"]) : ?>
+                                                        <option value="<?= ($item["value"] ?? "") ?>" selected><?= ($item["label"] ?? "") ?></option>
                                                     <?php else : ?>
                                                         <option value="<?= ($item["value"] ?? "") ?>"><?= ($item["label"] ?? "") ?></option>
                                                     <?php endif; ?>
@@ -136,7 +136,7 @@
                                                 if (!empty($levels)) : ?>
                                                     <?php foreach ($levels as $item) : ?>
                                                         <?php if ($user->level == $item["value"]) : ?>s
-                                                        <option value="<?= ($item["value"] ?? "") ?>"><?= ($item["label"] ?? "") ?></option>
+                                                        <option value="<?= ($item["value"] ?? "") ?>" selected><?= ($item["label"] ?? "") ?></option>
                                                     <?php endif; ?>
                                                 <?php endforeach; ?>
                                             <?php endif; ?>
@@ -155,7 +155,7 @@
                                                 if (!empty($access)) : ?>
                                                     <?php foreach ($access as $item) : ?>
                                                         <?php if ($user->status == $item["value"]) : ?>s
-                                                        <option value="<?= ($item["value"] ?? "") ?>"><?= ($item["label"] ?? "") ?></option>
+                                                        <option value="<?= ($item["value"] ?? "") ?>" selected><?= ($item["label"] ?? "") ?></option>
                                                     <?php endif; ?>
                                                 <?php endforeach; ?>
                                             <?php endif; ?>

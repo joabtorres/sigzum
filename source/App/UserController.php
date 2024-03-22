@@ -103,6 +103,7 @@ class UserController extends Controller
      */
     public function register(array $data): void
     {
+        user_level(2);
         if (!empty($data["csrf"])) {
             $data = filter_var_array($data, FILTER_SANITIZE_SPECIAL_CHARS);
             if (!empty($data["password"]) && empty($data["rpassword"])) {
@@ -190,12 +191,11 @@ class UserController extends Controller
                 $user->sector_id = $data["sector_id"];
             }
             if (isset($data["status"])) {
-                $user->level =  !empty($data["status"]) ? filter_var($data["status"], FILTER_VALIDATE_INT) : 0;
+                $user->status =  !empty($data["status"]) ? filter_var($data["status"], FILTER_VALIDATE_INT) : 0;
             }
             if (isset($data["level"])) {
-                $user->status = !empty($data["level"]) ? filter_var($data["level"], FILTER_VALIDATE_INT) : 1;
+                $user->level = !empty($data["level"]) ? filter_var($data["level"], FILTER_VALIDATE_INT) : 1;
             }
-
             if (!$user->save()) {
                 $json["message"] = $user->message()->render();
                 echo json_encode($json);
@@ -229,6 +229,7 @@ class UserController extends Controller
      */
     public function remove(array $data): void
     {
+        user_level(2);
         $user = (new User())->findById(filter_var($data, FILTER_VALIDATE_INT));
         if (!$user) {
             $this->message->warning("Ooops {$this->user->first_name}! Você tentou excluir um registro inexistente do banco de dados.")->flash();

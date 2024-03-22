@@ -97,7 +97,7 @@ define("CONF_IMAGE_QUALITY", ["jpg" => 75, "png" => 5]);
 define("CONF_MAIL_HOST", "smtp.sendgrid.net");
 define("CONF_MAIL_PORT", "587");
 define("CONF_MAIL_USER", "apikey");
-define("CONF_MAIL_PASS", "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");
+define("CONF_MAIL_PASS", "");
 define("CONF_MAIL_SENDER", ["name" => "Joab T. Alencar", "address" => "contato@joabtorres.com.br"]);
 define("CONF_MAIL_SUPPORT", "contato@joabtorres.com.br");
 define("CONF_MAIL_OPTION_LANG", "br");

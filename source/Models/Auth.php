@@ -2,7 +2,6 @@
 
 namespace Source\Models;
 
-use mysql_xdevapi\Warning;
 use Source\Core\Model;
 use Source\Core\Session;
 use Source\Core\View;
@@ -153,7 +152,7 @@ class Auth extends Model
         $view = new View(__DIR__ . "/../../shared/views/email");
         $message = $view->render("forget", [
             "first_name" => $user->first_name,
-            "forget_link" => url("/recuperar/{$user->email}|{$user->forget}")
+            "forget_link" => url("/forget/{$user->email}|{$user->forget}")
         ]);
 
         (new Email())->bootstrap(
