@@ -6,30 +6,30 @@
 define("CONF_DB_HOST", "localhost");
 define("CONF_DB_USER", "root");
 define("CONF_DB_PASS", "");
-define("CONF_DB_NAME", "sigzum_db");
+define("CONF_DB_NAME", "cinemasala1");
 
 /**
  * PROJECT URLs
  */
-define("CONF_URL_BASE", "https://www.sigzum.com.br");
-define("CONF_URL_TEST", "https://www.localhost/sigzum");
+define("CONF_URL_BASE", "https://www.cinemasala1.com.br");
+define("CONF_URL_TEST", "https://www.localhost/cinemasala1");
 define("CONF_URL_ADMIN", "/admin");
 
 /**
  * SITE
  */
-define("CONF_SITE_NAME", "SIGZUM");
+define("CONF_SITE_NAME", "Cinema Sala 1");
 define("CONF_SITE_VERSION", "1.0");
-define("CONF_SITE_TITLE", "Gerencie seus documentos de forma simples e fácil");
-define("CONF_SITE_DESC", "A Aplicação é responsável por criar, organizar e gerenciar atividades internas da gestão da empresa, sendo necessário adicionar novos modulos de acordo com a necessidade.");
+define("CONF_SITE_TITLE", "Uma tela, mil emoções");
+define("CONF_SITE_DESC", "O melhor do cinema pertinho de você.");
 define("CONF_SITE_LANG", "pt_BR");
-define("CONF_SITE_DOMAIN", "sigzum.zumtelecom.com.br");
-define("CONF_SITE_ADDR_STREET", "Tv. Vítor Campos");
-define("CONF_SITE_ADDR_NUMBER", "220");
-define("CONF_SITE_ADDR_COMPLEMENT", "Bairro Centro");
+define("CONF_SITE_DOMAIN", "cinemasala1.com.br");
+define("CONF_SITE_ADDR_STREET", "Avenida Doutor Hugo de Mendonca");
+define("CONF_SITE_ADDR_NUMBER", "515");
+define("CONF_SITE_ADDR_COMPLEMENT", "Bairro Comercio");
 define("CONF_SITE_ADDR_CITY", "Itaituba");
 define("CONF_SITE_ADDR_STATE", "PA");
-define("CONF_SITE_ADDR_ZIPCODE", "68180-070");
+define("CONF_SITE_ADDR_ZIPCODE", "68180-005");
 
 
 /**
@@ -66,7 +66,7 @@ define("CONF_MESSAGE_SUCCESS", "bg-success");
 define("CONF_MESSAGE_SUCCESS_ICON", "<i class='fa-solid fa-check'></i>");
 define("CONF_MESSAGE_WARNING", "bg-warning");
 define("CONF_MESSAGE_WARNING_ICON", "<i class='fa-solid fa-triangle-exclamation'></i>");
-define("CONF_MESSAGE_ERROR", "bg-danger");
+define("CONF_MESSAGE_ERROR", "bg-danger text-white");
 define("CONF_MESSAGE_ERROR_ICON", "<i class='fa-solid fa-xmark'></i>");
 
 /**
@@ -74,7 +74,7 @@ define("CONF_MESSAGE_ERROR_ICON", "<i class='fa-solid fa-xmark'></i>");
  */
 define("CONF_VIEW_PATH", __DIR__ . "/../../shared/views");
 define("CONF_VIEW_EXT", "php");
-define("CONF_VIEW_THEME", "sigzum");
+define("CONF_VIEW_THEME", "website");
 
 /**
  * UPLOAD
@@ -100,6 +100,7 @@ define("CONF_MAIL_USER", "apikey");
 define("CONF_MAIL_PASS", "");
 define("CONF_MAIL_SENDER", ["name" => "Joab T. Alencar", "address" => "contato@joabtorres.com.br"]);
 define("CONF_MAIL_SUPPORT", "contato@joabtorres.com.br");
+define("CONF_MAIL_DESTINATARY", "cinemasala1itb@gmail.com");
 define("CONF_MAIL_OPTION_LANG", "br");
 define("CONF_MAIL_OPTION_HTML", true);
 define("CONF_MAIL_OPTION_AUTH", true);

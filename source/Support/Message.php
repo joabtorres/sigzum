@@ -118,9 +118,7 @@ class Message
     {
         return "<div class='" . CONF_MESSAGE_CLASS . " {$this->getType()}'>
         {$this->getIcon()} {$this->getText()}
-        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-            <span aria-hidden='true'>&times;</span>
-        </button>
+        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
         </div>";
     }
 
